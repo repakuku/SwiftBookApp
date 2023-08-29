@@ -23,7 +23,7 @@ class CourseListViewController: UITableViewController {
 extension CourseListViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        1
     }
      
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -31,4 +31,11 @@ extension CourseListViewController {
          
          return cell
      }
+}
+
+// MARK: - UITableViewDelegate
+extension CourseListViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.pushViewController(CourseDetailsViewController(), animated: true)
+    }
 }
