@@ -22,8 +22,10 @@ final class CourseListViewController: UITableViewController {
     private func setupNavigationBar() {
         title = "Courses"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = .white
         
         let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.backgroundColor = .systemBlue
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
