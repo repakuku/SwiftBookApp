@@ -9,12 +9,14 @@ import UIKit
 
 final class CourseDetailsViewController: UIViewController {
     
+    // MARK: - UIViews
+    
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Name"
         label.textAlignment = .center
-        
+        label.font = UIFont(name: "Menlo-Regular", size: 23)
         return label
     }()
     
@@ -22,7 +24,7 @@ final class CourseDetailsViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Number of lessons:"
-        
+        label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
     
@@ -30,7 +32,7 @@ final class CourseDetailsViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Number of tests:"
-        
+        label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
     
@@ -38,18 +40,17 @@ final class CourseDetailsViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "graduationcap")
-        
         return imageView
     }()
     
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        let image = UIImage(systemName: "heart.fill")
-        button.imageView?.image = image
+        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         return button
     }()
     
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,6 +67,7 @@ final class CourseDetailsViewController: UIViewController {
         setupConstraints()
     }
     
+    // MARK: - Setup UI
     private func setupSubview(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
@@ -111,8 +113,8 @@ final class CourseDetailsViewController: UIViewController {
             [
                 favoriteButton.widthAnchor.constraint(equalToConstant: 60),
                 favoriteButton.heightAnchor.constraint(equalToConstant: 60),
-                favoriteButton.trailingAnchor.constraint(equalTo: courseImage.trailingAnchor, constant: 100),
-                favoriteButton.bottomAnchor.constraint(equalTo: courseImage.bottomAnchor, constant: 100)
+                favoriteButton.trailingAnchor.constraint(equalTo: courseImage.trailingAnchor),
+                favoriteButton.bottomAnchor.constraint(equalTo: courseImage.bottomAnchor)
             ]
         )
     }
