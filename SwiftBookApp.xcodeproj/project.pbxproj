@@ -11,8 +11,8 @@
 		0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0768587A2A9E8C4200927BE5 /* SceneDelegate.swift */; };
 		076858822A9E8C4200927BE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 076858812A9E8C4200927BE5 /* Assets.xcassets */; };
 		076858852A9E8C4200927BE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 076858832A9E8C4200927BE5 /* LaunchScreen.storyboard */; };
-		0768588D2A9E8F3D00927BE5 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0768588C2A9E8F3D00927BE5 /* CourseListViewController.swift */; };
-		0768588F2A9E95EF00927BE5 /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0768588E2A9E95EF00927BE5 /* CourseDetailsViewController.swift */; };
+		07C989272A9FAD9F0033396F /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C989262A9FAD9F0033396F /* CourseListViewController.swift */; };
+		07C989292A9FADB20033396F /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C989282A9FADB20033396F /* CourseDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,8 +22,8 @@
 		076858812A9E8C4200927BE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		076858842A9E8C4200927BE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		076858862A9E8C4200927BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0768588C2A9E8F3D00927BE5 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
-		0768588E2A9E95EF00927BE5 /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
+		07C989262A9FAD9F0033396F /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
+		07C989282A9FADB20033396F /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +56,48 @@
 		076858772A9E8C4200927BE5 /* SwiftBookApp */ = {
 			isa = PBXGroup;
 			children = (
-				076858782A9E8C4200927BE5 /* AppDelegate.swift */,
-				0768587A2A9E8C4200927BE5 /* SceneDelegate.swift */,
-				0768588C2A9E8F3D00927BE5 /* CourseListViewController.swift */,
-				0768588E2A9E95EF00927BE5 /* CourseDetailsViewController.swift */,
-				076858812A9E8C4200927BE5 /* Assets.xcassets */,
-				076858832A9E8C4200927BE5 /* LaunchScreen.storyboard */,
-				076858862A9E8C4200927BE5 /* Info.plist */,
+				07C989212A9FAC5D0033396F /* App */,
+				07C989252A9FAD2E0033396F /* ViewControllers */,
+				07C989202A9FAC300033396F /* Resources */,
+				07C989222A9FAC650033396F /* Storyboards */,
 			);
 			path = SwiftBookApp;
+			sourceTree = "<group>";
+		};
+		07C989202A9FAC300033396F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				076858812A9E8C4200927BE5 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		07C989212A9FAC5D0033396F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				076858782A9E8C4200927BE5 /* AppDelegate.swift */,
+				0768587A2A9E8C4200927BE5 /* SceneDelegate.swift */,
+				076858862A9E8C4200927BE5 /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		07C989222A9FAC650033396F /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				076858832A9E8C4200927BE5 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		07C989252A9FAD2E0033396F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				07C989262A9FAD9F0033396F /* CourseListViewController.swift */,
+				07C989282A9FADB20033396F /* CourseDetailsViewController.swift */,
+			);
+			name = ViewControllers;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +172,8 @@
 			files = (
 				076858792A9E8C4200927BE5 /* AppDelegate.swift in Sources */,
 				0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */,
-				0768588F2A9E95EF00927BE5 /* CourseDetailsViewController.swift in Sources */,
-				0768588D2A9E8F3D00927BE5 /* CourseListViewController.swift in Sources */,
+				07C989292A9FADB20033396F /* CourseDetailsViewController.swift in Sources */,
+				07C989272A9FAD9F0033396F /* CourseListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +314,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6PNGGFV6BC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SwiftBookApp/Info.plist;
+				INFOPLIST_FILE = SwiftBookApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -309,7 +342,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6PNGGFV6BC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SwiftBookApp/Info.plist;
+				INFOPLIST_FILE = SwiftBookApp/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
