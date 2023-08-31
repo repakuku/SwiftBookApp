@@ -46,10 +46,14 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var favoriteButton: UIButton = {
         let button = UIButton()
         let image = UIImage(systemName: "heart.fill")
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(image, for: .normal)
         button.tintColor = .systemRed
-        // Heart size
+        
+        let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30), scale: .default)
+        button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
+        
         return button
     }()
     
