@@ -44,12 +44,16 @@ final class CourseDetailsViewController: UIViewController {
     }()
     
     private lazy var favoriteButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "heart.fill")
-        
+        let action = UIAction { [unowned self] _ in
+            
+        }
+        let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
+        
+        let image = UIImage(systemName: "heart.fill")
         button.setImage(image, for: .normal)
-        button.tintColor = .systemRed
+        
+        button.tintColor = .systemGray
         
         let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30), scale: .default)
         button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
@@ -72,9 +76,19 @@ final class CourseDetailsViewController: UIViewController {
         )
         
         setupConstraints()
+        
+        setupUI()
     }
     
     // MARK: - Setup UI
+    private func setupUI() {
+        setStatusForFavoriteButton(false)
+    }
+    
+    private func setStatusForFavoriteButton(_ status: Bool) {
+        favoriteButton.tintColor = status ? .systemRed : .systemGray
+    }
+    
     private func setupSubview(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
