@@ -24,11 +24,13 @@ final class NetworkManager {
             }
             
             do {
-//                let courses = try JSONDecoder().decode([Course].self, from: data)
+                let courses = try JSONDecoder().decode([Course].self, from: data)
+                DispatchQueue.main.async {
+                    completion(courses)
+                }
             } catch {
                 print("Error serialization json", error)
             }
         }.resume()
     }
-    
 }
