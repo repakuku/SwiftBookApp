@@ -9,12 +9,10 @@ import UIKit
 
 final class CourseListViewController: UIViewController {
     
-    var courses: [Course] = []
-    
+    // MARK: - Private Properties
     private let cellID = "course"
     private var activityIndicator: UIActivityIndicatorView?
-    private let networkManager = NetworkManager.shared
-    private let imageManager = ImageManager.shared
+    private var courses: [Course] = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -26,20 +24,20 @@ final class CourseListViewController: UIViewController {
         return tableView
     }()
     
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(tableView)
+        setupConstraints()
         activityIndicator = showActivityIndicator(in: view)
         setupNavigationBar()
-        setupConstraints()
         
         fetchCourses()
     }
     
     // MARK: - Private Methods
     private func fetchCourses() {
-        networkManager.fetchData { [unowned self] courses in
+        NetworkManager.shared.fetchData { [unowned self] courses in
             self.courses = courses
             DispatchQueue.main.async {
                 self.activityIndicator?.stopAnimating()
