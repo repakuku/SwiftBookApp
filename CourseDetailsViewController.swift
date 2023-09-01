@@ -9,12 +9,13 @@ import UIKit
 
 final class CourseDetailsViewController: UIViewController {
     
-    // MARK: - UIViews
+    var course: Course!
     
+    // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Name"
+        label.text = course.name
         label.textAlignment = .center
         label.font = UIFont(name: "Menlo-Regular", size: 23)
         return label
@@ -23,7 +24,7 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var numberOfLessonsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Number of lessons:"
+        label.text = "Number of lessons: \(course.numberOfLessons)"
         label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
@@ -31,7 +32,7 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var numberOfTestsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Number of tests:"
+        label.text = "Number of tests: \(course.numberOfTests)"
         label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
@@ -39,7 +40,8 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var courseImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "graduationcap")
+        guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return UIImageView() }
+        imageView.image = UIImage(data: imageData)
         return imageView
     }()
     

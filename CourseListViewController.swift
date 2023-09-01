@@ -105,7 +105,9 @@ extension CourseListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CourseListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let courseDetailsVC = CourseDetailsViewController()
+        courseDetailsVC.course = courses[indexPath.row]
         navigationController?.pushViewController(courseDetailsVC, animated: true)
     }
 }
