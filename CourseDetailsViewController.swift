@@ -11,6 +11,8 @@ final class CourseDetailsViewController: UIViewController {
     
     var course: Course!
     
+    private var isFavorite = false
+    
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
@@ -47,7 +49,9 @@ final class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            
+            isFavorite.toggle()
+            setStatusForFavoriteButton()
+            DataManager.shared.setFavoriteStatus(for: course.name, with: isFavorite)
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +70,7 @@ final class CourseDetailsViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         view.backgroundColor = .white
         
         setupSubview(
@@ -78,17 +82,17 @@ final class CourseDetailsViewController: UIViewController {
         )
         
         setupConstraints()
-        
-        setupUI()
+        loadFavoriteStatus()
+        setStatusForFavoriteButton()
     }
     
     // MARK: - Setup UI
-    private func setupUI() {
-        setStatusForFavoriteButton(false)
+    private func setStatusForFavoriteButton() {
+        favoriteButton.tintColor = isFavorite ? .systemRed : .systemGray
     }
     
-    private func setStatusForFavoriteButton(_ status: Bool) {
-        favoriteButton.tintColor = status ? .systemRed : .systemGray
+    private func loadFavoriteStatus() {
+        isFavorite = DataManager.shared.getFavoriteStatus(for: course.name)
     }
     
     private func setupSubview(_ subviews: UIView...) {
