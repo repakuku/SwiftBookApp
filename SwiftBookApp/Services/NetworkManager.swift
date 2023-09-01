@@ -14,10 +14,8 @@ final class NetworkManager {
     
     private init() {}
     
-    func fetchData() -> [Course] {
-        guard let url = URL(string: api) else { return [] }
-        
-        var courses: [Course] = []
+    func fetchData(completion: @escaping (_ courses: [Course]) -> Void) {
+        guard let url = URL(string: api) else { return }
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else {
@@ -26,12 +24,16 @@ final class NetworkManager {
             }
             
             do {
-                courses = try JSONDecoder().decode([Course].self, from: data)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let courses = try decoder.decode([Course].self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(courses)
+                }
             } catch {
                 print("Error serialization json", error)
             }
         }.resume()
-        
-        return courses
     }
 }

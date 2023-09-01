@@ -9,9 +9,11 @@ import UIKit
 
 final class CourseListViewController: UITableViewController {
     
-    private let cellID = "course"
+    var courses: [Course] = []
     
+    private let cellID = "course"
     private var activityIndicator: UIActivityIndicatorView?
+    private let networkManager = NetworkManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +21,13 @@ final class CourseListViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.rowHeight = 100
         
-//        activityIndicator = showActivityIndicator(in: view)
+        activityIndicator = showActivityIndicator(in: view)
         setupNavigationBar()
+        
+        networkManager.fetchData { [unowned self] courses in
+            self.courses = courses
+            tableView.reloadData()
+        }
     }
     
     // MARK: - Setup UI
@@ -56,12 +63,14 @@ final class CourseListViewController: UITableViewController {
 extension CourseListViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        courses.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        
+        var content = cell.defaultContentConfiguration()
+        content.text = courses[indexPath.row].name
+        cell.contentConfiguration = content
         return cell
     }
 
