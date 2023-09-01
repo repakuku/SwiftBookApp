@@ -14,19 +14,28 @@ final class CourseListViewController: UITableViewController {
     private let cellID = "course"
     private var activityIndicator: UIActivityIndicatorView?
     private let networkManager = NetworkManager.shared
+    private let imageManager = ImageManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityIndicator = showActivityIndicator(in: view)
+        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.rowHeight = 100
         
-        activityIndicator = showActivityIndicator(in: view)
+        
         setupNavigationBar()
         
+        fetchCourses()
+    }
+    
+    // MARK: - Private Methods
+    private func fetchCourses() {
         networkManager.fetchData { [unowned self] courses in
             self.courses = courses
             tableView.reloadData()
+            activityIndicator?.stopAnimating()
         }
     }
     
@@ -69,7 +78,14 @@ extension CourseListViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         var content = cell.defaultContentConfiguration()
-        content.text = courses[indexPath.row].name
+        let course = courses[indexPath.row]
+        content.text = course.name
+        
+        let url = course.imageUrl
+        guard let imageData = imageManager.fetchImageData(from: url) else { return cell }
+        let image = UIImage(data: imageData)
+        content.image = image
+        
         cell.contentConfiguration = content
         return cell
     }
