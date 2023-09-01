@@ -27,11 +27,10 @@ final class NetworkManager {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let courses = try decoder.decode([Course].self, from: data)
-                
                 DispatchQueue.main.async {
                     completion(courses)
                 }
-            } catch {
+            } catch let error {
                 print("Error serialization json", error)
             }
         }.resume()

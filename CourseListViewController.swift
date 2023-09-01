@@ -12,19 +12,17 @@ final class CourseListViewController: UITableViewController {
     var courses: [Course] = []
     
     private let cellID = "course"
-    private var activityIndicator: UIActivityIndicatorView?
+//    private var activityIndicator: UIActivityIndicatorView?
     private let networkManager = NetworkManager.shared
     private let imageManager = ImageManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicator = showActivityIndicator(in: view)
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(CourseCell.self, forCellReuseIdentifier: cellID)
         tableView.rowHeight = 100
         
-        
+//        activityIndicator = showActivityIndicator(in: view)
         setupNavigationBar()
         
         fetchCourses()
@@ -34,24 +32,26 @@ final class CourseListViewController: UITableViewController {
     private func fetchCourses() {
         networkManager.fetchData { [unowned self] courses in
             self.courses = courses
-            tableView.reloadData()
-            activityIndicator?.stopAnimating()
+            DispatchQueue.main.async {
+//                self.activityIndicator?.stopAnimating()
+                self.tableView.reloadData()
+            }
         }
     }
     
     // MARK: - Setup UI
     
-    private func showActivityIndicator(in view: UIView) -> UIActivityIndicatorView {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = .black
-        activityIndicator.startAnimating()
-        activityIndicator.center = view.center
-        activityIndicator.hidesWhenStopped = true
-        
-        view.addSubview(activityIndicator)
-        
-        return activityIndicator
-    }
+//    private func showActivityIndicator(in view: UIView) -> UIActivityIndicatorView {
+//        let activityIndicator = UIActivityIndicatorView(style: .large)
+//        activityIndicator.color = .black
+//        activityIndicator.startAnimating()
+//        activityIndicator.center = view.center
+//        activityIndicator.hidesWhenStopped = true
+//        
+//        view.addSubview(activityIndicator)
+//        
+//        return activityIndicator
+//    }
     
     private func setupNavigationBar() {
         title = "Courses"
@@ -77,16 +77,9 @@ extension CourseListViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        var content = cell.defaultContentConfiguration()
+        guard let cell = cell as? CourseCell else { return UITableViewCell() }
         let course = courses[indexPath.row]
-        content.text = course.name
-        
-        let url = course.imageUrl
-        guard let imageData = imageManager.fetchImageData(from: url) else { return cell }
-        let image = UIImage(data: imageData)
-        content.image = image
-        
-        cell.contentConfiguration = content
+        cell.configure(with: course)
         return cell
     }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0730DAEB2AA27619004ACDDE /* CourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0730DAEA2AA27619004ACDDE /* CourseCell.swift */; };
 		074829522AA1131D002DACCB /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074829512AA1131D002DACCB /* Course.swift */; };
 		074829552AA11D5E002DACCB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074829542AA11D5E002DACCB /* NetworkManager.swift */; };
 		074829572AA121E7002DACCB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074829562AA121E7002DACCB /* ImageManager.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0730DAEA2AA27619004ACDDE /* CourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCell.swift; sourceTree = "<group>"; };
 		074829512AA1131D002DACCB /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		074829542AA11D5E002DACCB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		074829562AA121E7002DACCB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0730DAE92AA27608004ACDDE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0730DAEA2AA27619004ACDDE /* CourseCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		074829502AA11308002DACCB /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +133,7 @@
 			children = (
 				07C989262A9FAD9F0033396F /* CourseListViewController.swift */,
 				07C989282A9FADB20033396F /* CourseDetailsViewController.swift */,
+				0730DAE92AA27608004ACDDE /* Cells */,
 			);
 			name = ViewControllers;
 			path = ..;
@@ -201,6 +212,7 @@
 				074829552AA11D5E002DACCB /* NetworkManager.swift in Sources */,
 				074829592AA122EC002DACCB /* DataManager.swift in Sources */,
 				074829522AA1131D002DACCB /* Course.swift in Sources */,
+				0730DAEB2AA27619004ACDDE /* CourseCell.swift in Sources */,
 				074829572AA121E7002DACCB /* ImageManager.swift in Sources */,
 				076858792A9E8C4200927BE5 /* AppDelegate.swift in Sources */,
 				0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */,
