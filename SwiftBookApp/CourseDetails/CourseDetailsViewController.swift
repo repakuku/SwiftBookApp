@@ -11,14 +11,21 @@ final class CourseDetailsViewController: UIViewController {
     
     var course: Course!
     
+    private var viewModel: CourseDetailsViewModelProtocol! {
+        didSet {
+            courseNameLabel.text = viewModel.courseName
+        }
+    }
+    
     private var isFavorite = false
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = course.name
+//        label.text = course.name
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.font = UIFont(name: "Menlo-Regular", size: 23)
         return label
     }()
@@ -69,6 +76,8 @@ final class CourseDetailsViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel = CourseDetailsViewModel(course: course)
                 
         view.backgroundColor = .white
         

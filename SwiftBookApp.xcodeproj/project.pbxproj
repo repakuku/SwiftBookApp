@@ -17,6 +17,7 @@
 		076858852A9E8C4200927BE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 076858832A9E8C4200927BE5 /* LaunchScreen.storyboard */; };
 		07C989272A9FAD9F0033396F /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C989262A9FAD9F0033396F /* CourseListViewController.swift */; };
 		07C989292A9FADB20033396F /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C989282A9FADB20033396F /* CourseDetailsViewController.swift */; };
+		07F9B3DD2AA6769D00928030 /* CourseDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F9B3DC2AA6769D00928030 /* CourseDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		076858862A9E8C4200927BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07C989262A9FAD9F0033396F /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		07C989282A9FADB20033396F /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
+		07F9B3DC2AA6769D00928030 /* CourseDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 		076858772A9E8C4200927BE5 /* SwiftBookApp */ = {
 			isa = PBXGroup;
 			children = (
+				07F9B3DB2AA6766100928030 /* CourseDetails */,
 				07C989212A9FAC5D0033396F /* App */,
 				074829502AA11308002DACCB /* Model */,
 				074829532AA11D43002DACCB /* Services */,
@@ -129,11 +132,19 @@
 			isa = PBXGroup;
 			children = (
 				07C989262A9FAD9F0033396F /* CourseListViewController.swift */,
-				07C989282A9FADB20033396F /* CourseDetailsViewController.swift */,
 				0730DAE92AA27608004ACDDE /* Cells */,
 			);
 			name = ViewControllers;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		07F9B3DB2AA6766100928030 /* CourseDetails */ = {
+			isa = PBXGroup;
+			children = (
+				07C989282A9FADB20033396F /* CourseDetailsViewController.swift */,
+				07F9B3DC2AA6769D00928030 /* CourseDetailsViewModel.swift */,
+			);
+			path = CourseDetails;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +221,7 @@
 				074829592AA122EC002DACCB /* DataManager.swift in Sources */,
 				074829522AA1131D002DACCB /* Course.swift in Sources */,
 				0730DAEB2AA27619004ACDDE /* CourseCell.swift in Sources */,
+				07F9B3DD2AA6769D00928030 /* CourseDetailsViewModel.swift in Sources */,
 				076858792A9E8C4200927BE5 /* AppDelegate.swift in Sources */,
 				0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */,
 				07C989292A9FADB20033396F /* CourseDetailsViewController.swift in Sources */,
