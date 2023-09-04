@@ -42,8 +42,6 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var courseImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-//        guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return UIImageView() }
-//        imageView.image = UIImage(data: imageData)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
