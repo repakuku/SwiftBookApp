@@ -14,6 +14,8 @@ final class CourseDetailsViewController: UIViewController {
     private var viewModel: CourseDetailsViewModelProtocol! {
         didSet {
             courseNameLabel.text = viewModel.courseName
+            numberOfLessonsLabel.text = viewModel.numberOfLessons
+            numberOfTestsLabel.text = viewModel.numberOfTests
         }
     }
     
@@ -23,7 +25,6 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = course.name
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont(name: "Menlo-Regular", size: 23)
@@ -33,7 +34,6 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var numberOfLessonsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Number of lessons: \(course.numberOfLessons)"
         label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
@@ -41,7 +41,6 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var numberOfTestsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Number of tests: \(course.numberOfTests)"
         label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
@@ -77,8 +76,6 @@ final class CourseDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel = CourseDetailsViewModel(course: course)
-                
         view.backgroundColor = .white
         
         setupSubview(
@@ -88,6 +85,8 @@ final class CourseDetailsViewController: UIViewController {
             numberOfTestsLabel,
             favoriteButton
         )
+        
+        viewModel = CourseDetailsViewModel(course: course)
         
         setupConstraints()
         loadFavoriteStatus()
