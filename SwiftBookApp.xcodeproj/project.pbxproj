@@ -10,7 +10,6 @@
 		0730DAEB2AA27619004ACDDE /* CourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0730DAEA2AA27619004ACDDE /* CourseCell.swift */; };
 		074829522AA1131D002DACCB /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074829512AA1131D002DACCB /* Course.swift */; };
 		074829552AA11D5E002DACCB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074829542AA11D5E002DACCB /* NetworkManager.swift */; };
-		074829572AA121E7002DACCB /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074829562AA121E7002DACCB /* ImageManager.swift */; };
 		074829592AA122EC002DACCB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074829582AA122EC002DACCB /* DataManager.swift */; };
 		076858792A9E8C4200927BE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076858782A9E8C4200927BE5 /* AppDelegate.swift */; };
 		0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0768587A2A9E8C4200927BE5 /* SceneDelegate.swift */; };
@@ -18,13 +17,13 @@
 		076858852A9E8C4200927BE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 076858832A9E8C4200927BE5 /* LaunchScreen.storyboard */; };
 		07C989272A9FAD9F0033396F /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C989262A9FAD9F0033396F /* CourseListViewController.swift */; };
 		07C989292A9FADB20033396F /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C989282A9FADB20033396F /* CourseDetailsViewController.swift */; };
+		07F9B3DD2AA6769D00928030 /* CourseDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F9B3DC2AA6769D00928030 /* CourseDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0730DAEA2AA27619004ACDDE /* CourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCell.swift; sourceTree = "<group>"; };
 		074829512AA1131D002DACCB /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		074829542AA11D5E002DACCB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		074829562AA121E7002DACCB /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		074829582AA122EC002DACCB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		076858752A9E8C4200927BE5 /* SwiftBookApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftBookApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		076858782A9E8C4200927BE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -34,6 +33,7 @@
 		076858862A9E8C4200927BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		07C989262A9FAD9F0033396F /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
 		07C989282A9FADB20033396F /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
+		07F9B3DC2AA6769D00928030 /* CourseDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				074829542AA11D5E002DACCB /* NetworkManager.swift */,
-				074829562AA121E7002DACCB /* ImageManager.swift */,
 				074829582AA122EC002DACCB /* DataManager.swift */,
 			);
 			path = Services;
@@ -92,6 +91,7 @@
 		076858772A9E8C4200927BE5 /* SwiftBookApp */ = {
 			isa = PBXGroup;
 			children = (
+				07F9B3DB2AA6766100928030 /* CourseDetails */,
 				07C989212A9FAC5D0033396F /* App */,
 				074829502AA11308002DACCB /* Model */,
 				074829532AA11D43002DACCB /* Services */,
@@ -132,11 +132,19 @@
 			isa = PBXGroup;
 			children = (
 				07C989262A9FAD9F0033396F /* CourseListViewController.swift */,
-				07C989282A9FADB20033396F /* CourseDetailsViewController.swift */,
 				0730DAE92AA27608004ACDDE /* Cells */,
 			);
 			name = ViewControllers;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		07F9B3DB2AA6766100928030 /* CourseDetails */ = {
+			isa = PBXGroup;
+			children = (
+				07C989282A9FADB20033396F /* CourseDetailsViewController.swift */,
+				07F9B3DC2AA6769D00928030 /* CourseDetailsViewModel.swift */,
+			);
+			path = CourseDetails;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,7 +221,7 @@
 				074829592AA122EC002DACCB /* DataManager.swift in Sources */,
 				074829522AA1131D002DACCB /* Course.swift in Sources */,
 				0730DAEB2AA27619004ACDDE /* CourseCell.swift in Sources */,
-				074829572AA121E7002DACCB /* ImageManager.swift in Sources */,
+				07F9B3DD2AA6769D00928030 /* CourseDetailsViewModel.swift in Sources */,
 				076858792A9E8C4200927BE5 /* AppDelegate.swift in Sources */,
 				0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */,
 				07C989292A9FADB20033396F /* CourseDetailsViewController.swift in Sources */,

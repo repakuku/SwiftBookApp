@@ -9,15 +9,33 @@ import UIKit
 
 final class CourseDetailsViewController: UIViewController {
     
+    // For deletion
     var course: Course!
     
-    private var isFavorite = false
+    private var viewModel: CourseDetailsViewModelProtocol! {
+        didSet {
+            viewModel.viewModelDidChange = { [unowned self] viewModel in
+                setStatusForFavoriteButton(viewModel.isFavorite)
+            }
+            
+            courseNameLabel.text = viewModel.courseName
+            numberOfLessonsLabel.text = viewModel.numberOfLessons
+            numberOfTestsLabel.text = viewModel.numberOfTests
+            
+            DispatchQueue.global().async { [unowned self] in
+                guard let imageData = viewModel.imageData else { return }
+                
+                DispatchQueue.main.async { [unowned self] in
+                    courseImage.image = UIImage(data: imageData)
+                }
+            }
+        }
+    }
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = course.name
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont(name: "Menlo-Regular", size: 23)
@@ -27,7 +45,6 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var numberOfLessonsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Number of lessons: \(course.numberOfLessons)"
         label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
@@ -35,7 +52,6 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var numberOfTestsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Number of tests: \(course.numberOfTests)"
         label.font = UIFont(name: "GillSans-SemiBold", size: 17)
         return label
     }()
@@ -49,9 +65,7 @@ final class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            isFavorite.toggle()
-            setStatusForFavoriteButton()
-            DataManager.shared.setFavoriteStatus(for: course.name, with: isFavorite)
+            viewModel.favoriteButtonPressed()
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -68,11 +82,9 @@ final class CourseDetailsViewController: UIViewController {
     }()
     
     // MARK: - View Life Cycle
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         view.backgroundColor = .white
         
         setupSubview(
@@ -83,30 +95,15 @@ final class CourseDetailsViewController: UIViewController {
             favoriteButton
         )
         
-        setupConstraints()
-        loadFavoriteStatus()
-        setStatusForFavoriteButton()
+        viewModel = CourseDetailsViewModel(course: course)
         
-        fetchCourseImage()
+        setupConstraints()
+        setStatusForFavoriteButton(viewModel.isFavorite)
     }
     
-    // MARK: - Setup UI
-    private func fetchCourseImage() {
-        DispatchQueue.global().async { [unowned self] in
-            guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return }
-            
-            DispatchQueue.main.async { [unowned self] in
-                courseImage.image = UIImage(data: imageData)
-            }
-        }
-    }
-    
-    private func setStatusForFavoriteButton() {
-        favoriteButton.tintColor = isFavorite ? .systemRed : .systemGray
-    }
-    
-    private func loadFavoriteStatus() {
-        isFavorite = DataManager.shared.getFavoriteStatus(for: course.name)
+    // MARK: - Setup UI    
+    private func setStatusForFavoriteButton(_ status: Bool) {
+        favoriteButton.tintColor = status ? .systemRed : .systemGray
     }
     
     private func setupSubview(_ subviews: UIView...) {
