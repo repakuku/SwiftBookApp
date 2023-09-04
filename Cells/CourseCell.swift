@@ -7,12 +7,19 @@
 
 import UIKit
 
-class CourseCell: UITableViewCell {    
+class CourseCell: UITableViewCell {
+    
     func configure(with course: Course) {
         var content = defaultContentConfiguration()
         content.text = course.name
-        guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return }
-        content.image = UIImage(data: imageData)
+        
+        DispatchQueue.global().async {
+            guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return }
+            DispatchQueue.main.async {
+                content.image = UIImage(data: imageData)
+                self.contentConfiguration = content
+            }
+        }
         contentConfiguration = content
     }
 }
