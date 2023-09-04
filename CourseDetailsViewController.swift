@@ -44,6 +44,7 @@ final class CourseDetailsViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return UIImageView() }
         imageView.image = UIImage(data: imageData)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
