@@ -67,8 +67,6 @@ final class CourseDetailsViewController: UIViewController {
     }()
     
     // MARK: - View Life Cycle
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -92,7 +90,7 @@ final class CourseDetailsViewController: UIViewController {
     // MARK: - Setup UI
     private func fetchCourseImage() {
         DispatchQueue.global().async { [unowned self] in
-            guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return }
+            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
             
             DispatchQueue.main.async { [unowned self] in
                 courseImage.image = UIImage(data: imageData)
