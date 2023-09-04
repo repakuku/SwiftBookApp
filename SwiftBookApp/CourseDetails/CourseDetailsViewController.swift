@@ -16,6 +16,14 @@ final class CourseDetailsViewController: UIViewController {
             courseNameLabel.text = viewModel.courseName
             numberOfLessonsLabel.text = viewModel.numberOfLessons
             numberOfTestsLabel.text = viewModel.numberOfTests
+            
+            DispatchQueue.global().async { [unowned self] in
+                guard let imageData = viewModel.imageData else { return }
+                
+                DispatchQueue.main.async { [unowned self] in
+                    courseImage.image = UIImage(data: imageData)
+                }
+            }
         }
     }
     
@@ -91,21 +99,9 @@ final class CourseDetailsViewController: UIViewController {
         setupConstraints()
         loadFavoriteStatus()
         setStatusForFavoriteButton()
-        
-        fetchCourseImage()
     }
     
-    // MARK: - Setup UI
-    private func fetchCourseImage() {
-        DispatchQueue.global().async { [unowned self] in
-            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
-            
-            DispatchQueue.main.async { [unowned self] in
-                courseImage.image = UIImage(data: imageData)
-            }
-        }
-    }
-    
+    // MARK: - Setup UI    
     private func setStatusForFavoriteButton() {
         favoriteButton.tintColor = isFavorite ? .systemRed : .systemGray
     }

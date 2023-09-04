@@ -11,6 +11,7 @@ protocol CourseDetailsViewModelProtocol {
     var courseName: String { get }
     var numberOfLessons: String { get }
     var numberOfTests: String { get }
+    var imageData: Data? { get }
     init(course: Course)
 }
 
@@ -25,6 +26,10 @@ final class CourseDetailsViewModel: CourseDetailsViewModelProtocol {
     
     var numberOfTests: String {
         "Number of tests: \(course.numberOfTests)"
+    }
+    
+    var imageData: Data? {
+        NetworkManager.shared.fetchImageData(from: course.imageUrl)
     }
     
     private let course: Course
