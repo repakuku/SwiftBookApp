@@ -12,7 +12,10 @@ protocol CourseDetailsViewModelProtocol {
     var numberOfLessons: String { get }
     var numberOfTests: String { get }
     var imageData: Data? { get }
+    var isFavorite: Bool { get }
+    var viewModelDidChange: ((CourseDetailsViewModelProtocol) -> Void)? { get set }
     init(course: Course)
+    func favoriteButtonPressed()
 }
 
 final class CourseDetailsViewModel: CourseDetailsViewModelProtocol {
@@ -32,9 +35,24 @@ final class CourseDetailsViewModel: CourseDetailsViewModelProtocol {
         NetworkManager.shared.fetchImageData(from: course.imageUrl)
     }
     
+    var viewModelDidChange: ((CourseDetailsViewModelProtocol) -> Void)?
+    
+    var isFavorite: Bool {
+        get {
+            DataManager.shared.getFavoriteStatus(for: course.name)
+        } set {
+            DataManager.shared.setFavoriteStatus(for: course.name, with: newValue)
+            viewModelDidChange?(self)
+        }
+    }
+    
     private let course: Course
     
     init(course: Course) {
         self.course = course
+    }
+    
+    func favoriteButtonPressed() {
+        isFavorite.toggle()
     }
 }

@@ -9,10 +9,15 @@ import UIKit
 
 final class CourseDetailsViewController: UIViewController {
     
+    // For deletion
     var course: Course!
     
     private var viewModel: CourseDetailsViewModelProtocol! {
         didSet {
+            viewModel.viewModelDidChange = { [unowned self] viewModel in
+                setStatusForFavoriteButton(viewModel.isFavorite)
+            }
+            
             courseNameLabel.text = viewModel.courseName
             numberOfLessonsLabel.text = viewModel.numberOfLessons
             numberOfTestsLabel.text = viewModel.numberOfTests
@@ -26,8 +31,6 @@ final class CourseDetailsViewController: UIViewController {
             }
         }
     }
-    
-    private var isFavorite = false
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -62,9 +65,7 @@ final class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            isFavorite.toggle()
-            setStatusForFavoriteButton()
-            DataManager.shared.setFavoriteStatus(for: course.name, with: isFavorite)
+            viewModel.favoriteButtonPressed()
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -97,17 +98,12 @@ final class CourseDetailsViewController: UIViewController {
         viewModel = CourseDetailsViewModel(course: course)
         
         setupConstraints()
-        loadFavoriteStatus()
-        setStatusForFavoriteButton()
+        setStatusForFavoriteButton(viewModel.isFavorite)
     }
     
     // MARK: - Setup UI    
-    private func setStatusForFavoriteButton() {
-        favoriteButton.tintColor = isFavorite ? .systemRed : .systemGray
-    }
-    
-    private func loadFavoriteStatus() {
-        isFavorite = DataManager.shared.getFavoriteStatus(for: course.name)
+    private func setStatusForFavoriteButton(_ status: Bool) {
+        favoriteButton.tintColor = status ? .systemRed : .systemGray
     }
     
     private func setupSubview(_ subviews: UIView...) {
