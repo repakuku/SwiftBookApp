@@ -42,8 +42,8 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var courseImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return UIImageView() }
-        imageView.image = UIImage(data: imageData)
+//        guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return UIImageView() }
+//        imageView.image = UIImage(data: imageData)
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -69,6 +69,8 @@ final class CourseDetailsViewController: UIViewController {
     }()
     
     // MARK: - View Life Cycle
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -85,9 +87,21 @@ final class CourseDetailsViewController: UIViewController {
         setupConstraints()
         loadFavoriteStatus()
         setStatusForFavoriteButton()
+        
+        fetchCourseImage()
     }
     
     // MARK: - Setup UI
+    private func fetchCourseImage() {
+        DispatchQueue.global().async { [unowned self] in
+            guard let imageData = ImageManager.shared.fetchImageData(from: course.imageUrl) else { return }
+            
+            DispatchQueue.main.async { [unowned self] in
+                courseImage.image = UIImage(data: imageData)
+            }
+        }
+    }
+    
     private func setStatusForFavoriteButton() {
         favoriteButton.tintColor = isFavorite ? .systemRed : .systemGray
     }

@@ -98,6 +98,7 @@ extension CourseListViewController: UITableViewDataSource {
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
         let course = courses[indexPath.row]
         cell.configure(with: course)
+        
         return cell
     }
 }
