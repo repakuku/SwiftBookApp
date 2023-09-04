@@ -19,6 +19,7 @@ final class CourseDetailsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = course.name
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.font = UIFont(name: "Menlo-Regular", size: 23)
         return label
     }()
