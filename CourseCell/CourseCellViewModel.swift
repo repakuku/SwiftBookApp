@@ -8,31 +8,24 @@
 import Foundation
 
 protocol CourseCellViewModelProtocol {
-    var course: Course { get }
-    var name: String { get }
+    var courseName: String { get }
     var imageData: Data? { get }
+    init(course: Course)
 }
 
 final class CourseCellViewModel: CourseCellViewModelProtocol {
-    var course: Course
-    
-    var name: String {
+
+    var courseName: String {
         course.name
     }
     
     var imageData: Data? {
-        fetchImageData()
+        NetworkManager.shared.fetchImageData(from: course.imageUrl)
     }
     
-    private var url: URL {
-        course.imageUrl
-    }
+    private var course: Course
     
     init(course: Course) {
         self.course = course
-    }
-    
-    private func fetchImageData() -> Data? {
-        NetworkManager.shared.fetchImageData(from: url)
     }
 }
