@@ -86,13 +86,13 @@ final class CourseListViewController: UIViewController {
 extension CourseListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.courses.count
+        viewModel.numberOfRows()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
-        cell.viewModel = viewModel.getCourseCellViewModel(for: indexPath.row)
+        cell.viewModel = viewModel.getCourseCellViewModel(for: indexPath)
         
         return cell
     }

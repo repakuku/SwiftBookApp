@@ -8,15 +8,13 @@
 import Foundation
 
 protocol CourseListViewModelProtocol {
-    #warning("TODO: courses must be private")
-    var courses: [Course] { get }
     func fetchCourses(completion: @escaping () -> Void)
     func numberOfRows() -> Int
-    func getCourseCellViewModel(for index: Int) -> CourseCellViewModelProtocol
+    func getCourseCellViewModel(for indexPath: IndexPath) -> CourseCellViewModelProtocol
 }
 
 final class CourseListViewModel: CourseListViewModelProtocol {
-    var courses: [Course] = []
+    private var courses: [Course] = []
     
     func fetchCourses(completion: @escaping () -> Void) {
         NetworkManager.shared.fetchData { [unowned self] courses in
@@ -29,7 +27,7 @@ final class CourseListViewModel: CourseListViewModelProtocol {
         courses.count
     }
     
-    func getCourseCellViewModel(for index: Int) -> CourseCellViewModelProtocol {
-        CourseCellViewModel(course: courses[index])
+    func getCourseCellViewModel(for indexPath: IndexPath) -> CourseCellViewModelProtocol {
+        CourseCellViewModel(course: courses[indexPath.row])
     }
 }
