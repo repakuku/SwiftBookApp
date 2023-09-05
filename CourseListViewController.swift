@@ -12,8 +12,16 @@ final class CourseListViewController: UIViewController {
     // MARK: - Private Properties
     private let cellID = "course"
     private var activityIndicator: UIActivityIndicatorView?
-    private var courses: [Course] = []
+    private var viewModel: CourseListViewModelProtocol! {
+        didSet {
+            viewModel.fetchCourses { [weak self] in
+                self?.tableView.reloadData()
+                self?.activityIndicator?.stopAnimating()
+            }
+        }
+    }
     
+    // MARK: - Views
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -27,23 +35,11 @@ final class CourseListViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = CourseListViewModel()
         view.addSubview(tableView)
         setupConstraints()
         activityIndicator = showActivityIndicator(in: view)
         setupNavigationBar()
-        
-        fetchCourses()
-    }
-    
-    // MARK: - Private Methods
-    private func fetchCourses() {
-        NetworkManager.shared.fetchData { [unowned self] courses in
-            self.courses = courses
-            DispatchQueue.main.async {
-                self.activityIndicator?.stopAnimating()
-                self.tableView.reloadData()
-            }
-        }
     }
     
     // MARK: - Setup UI
@@ -90,13 +86,13 @@ final class CourseListViewController: UIViewController {
 extension CourseListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        courses.count
+        viewModel.courses.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
-        let course = courses[indexPath.row]
+        let course = viewModel.courses[indexPath.row]
         cell.configure(with: course)
         
         return cell
@@ -108,7 +104,7 @@ extension CourseListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let courseDetailsVC = CourseDetailsViewController()
-        courseDetailsVC.course = courses[indexPath.row]
+        courseDetailsVC.course = viewModel.courses[indexPath.row]
         navigationController?.pushViewController(courseDetailsVC, animated: true)
     }
 }
