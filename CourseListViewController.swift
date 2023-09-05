@@ -103,7 +103,7 @@ extension CourseListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let courseDetailsVC = CourseDetailsViewController()
-        courseDetailsVC.course = viewModel.courses[indexPath.row]
+        courseDetailsVC.viewModel = viewModel.getCourseDetailsViewModel(for: indexPath)
         navigationController?.pushViewController(courseDetailsVC, animated: true)
     }
 }

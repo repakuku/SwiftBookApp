@@ -9,28 +9,7 @@ import UIKit
 
 final class CourseDetailsViewController: UIViewController {
     
-    // For deletion
-    var course: Course!
-    
-    private var viewModel: CourseDetailsViewModelProtocol! {
-        didSet {
-            viewModel.viewModelDidChange = { [unowned self] viewModel in
-                setStatusForFavoriteButton(viewModel.isFavorite)
-            }
-            
-            courseNameLabel.text = viewModel.courseName
-            numberOfLessonsLabel.text = viewModel.numberOfLessons
-            numberOfTestsLabel.text = viewModel.numberOfTests
-            
-            DispatchQueue.global().async { [unowned self] in
-                guard let imageData = viewModel.imageData else { return }
-                
-                DispatchQueue.main.async { [unowned self] in
-                    courseImage.image = UIImage(data: imageData)
-                }
-            }
-        }
-    }
+    var viewModel: CourseDetailsViewModelProtocol!
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -95,13 +74,31 @@ final class CourseDetailsViewController: UIViewController {
             favoriteButton
         )
         
-        viewModel = CourseDetailsViewModel(course: course)
-        
         setupConstraints()
-        setStatusForFavoriteButton(viewModel.isFavorite)
+        setupUI()
     }
     
-    // MARK: - Setup UI    
+    // MARK: - Setup UI
+    private func setupUI() {
+        setStatusForFavoriteButton(viewModel.isFavorite)
+        
+        viewModel.viewModelDidChange = { [unowned self] viewModel in
+            setStatusForFavoriteButton(viewModel.isFavorite)
+        }
+        
+        courseNameLabel.text = viewModel.courseName
+        numberOfLessonsLabel.text = viewModel.numberOfLessons
+        numberOfTestsLabel.text = viewModel.numberOfTests
+        
+        DispatchQueue.global().async { [unowned self] in
+            guard let imageData = viewModel.imageData else { return }
+            
+            DispatchQueue.main.async { [unowned self] in
+                courseImage.image = UIImage(data: imageData)
+            }
+        }
+    }
+    
     private func setStatusForFavoriteButton(_ status: Bool) {
         favoriteButton.tintColor = status ? .systemRed : .systemGray
     }
