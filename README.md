@@ -1,5 +1,12 @@
 # SwiftBookApp
 
+Displaying data on the screen with detailed information.
+Saving user preferences (favorite button).
+Displaying a list of available courses.
+Working with UITableViewCell.
+Transitioning to and passing data to another screen.
+Programming app interface in code with custom navigation bar.
+
 * MVVM
 * Programmatic UI
 * UIKit
