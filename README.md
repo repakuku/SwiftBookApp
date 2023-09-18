@@ -8,6 +8,7 @@ Transitioning to and passing data to another screen.
 Programming app interface in code with custom navigation bar.
 
 * MVVM
+* Boxing
 * Programmatic UI
 * UIKit
 * URLSession
