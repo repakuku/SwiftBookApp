@@ -9,7 +9,7 @@ import UIKit
 
 final class CourseDetailsViewController: UIViewController {
     
-    var viewModel: CourseDetailsViewModelProtocol!
+    var courseDetailsViewModel: CourseDetailsViewModelProtocol!
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -44,7 +44,7 @@ final class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            viewModel.favoriteButtonPressed()
+            courseDetailsViewModel.favoriteButtonPressed()
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -80,18 +80,18 @@ final class CourseDetailsViewController: UIViewController {
     
     // MARK: - Setup UI
     private func setupUI() {
-        setStatusForFavoriteButton(viewModel.isFavorite)
+        setStatusForFavoriteButton(courseDetailsViewModel.isFavorite.value)
         
-        viewModel.viewModelDidChange = { [unowned self] viewModel in
-            setStatusForFavoriteButton(viewModel.isFavorite)
+        courseDetailsViewModel.isFavorite.bind { [unowned self] value in
+            setStatusForFavoriteButton(value)
         }
         
-        courseNameLabel.text = viewModel.courseName
-        numberOfLessonsLabel.text = viewModel.numberOfLessons
-        numberOfTestsLabel.text = viewModel.numberOfTests
+        courseNameLabel.text = courseDetailsViewModel.courseName
+        numberOfLessonsLabel.text = courseDetailsViewModel.numberOfLessons
+        numberOfTestsLabel.text = courseDetailsViewModel.numberOfTests
         
         DispatchQueue.global().async { [unowned self] in
-            guard let imageData = viewModel.imageData else { return }
+            guard let imageData = courseDetailsViewModel.imageData else { return }
             
             DispatchQueue.main.async { [unowned self] in
                 courseImage.image = UIImage(data: imageData)
