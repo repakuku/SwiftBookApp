@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CourseCell: UITableViewCell {
+final class CourseCell: UITableViewCell {
     var viewModel: CourseCellViewModelProtocol! {
         didSet {
             var content = defaultContentConfiguration()
