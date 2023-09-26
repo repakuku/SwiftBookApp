@@ -7,6 +7,15 @@
 
 import UIKit
 
+protocol CourseDetailsViewInputProtocol: AnyObject {
+    
+}
+
+protocol CourseDetailsViewOutputProtocol {
+    init(view: CourseDetailsViewInputProtocol)
+    func showDetails()
+}
+
 final class CourseDetailsViewController: UIViewController {
     
     var courseDetailsViewModel: CourseDetailsViewModelProtocol!
@@ -45,6 +54,7 @@ final class CourseDetailsViewController: UIViewController {
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
             courseDetailsViewModel.favoriteButtonPressed()
+            setStatusForFavoriteButton(courseDetailsViewModel.isFavorite)
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -80,11 +90,7 @@ final class CourseDetailsViewController: UIViewController {
     
     // MARK: - Setup UI
     private func setupUI() {
-        setStatusForFavoriteButton(courseDetailsViewModel.isFavorite.value)
-        
-        courseDetailsViewModel.isFavorite.bind { [unowned self] value in
-            setStatusForFavoriteButton(value)
-        }
+        setStatusForFavoriteButton(courseDetailsViewModel.isFavorite)
         
         courseNameLabel.text = courseDetailsViewModel.courseName
         numberOfLessonsLabel.text = courseDetailsViewModel.numberOfLessons
