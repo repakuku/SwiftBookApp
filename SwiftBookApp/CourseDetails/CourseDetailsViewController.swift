@@ -12,7 +12,7 @@ protocol CourseDetailsViewInputProtocol: AnyObject {
     func displayCourseName(with title: String)
     func displayNumberOfLessons(with title: String)
     func displayNumberOfTests(with title: String)
-    func displayImage(with imageData: Data)
+    func displayCourseImage(with imageData: Data)
     func displayImageForFavoriteButton(with status: Bool)
 }
 
@@ -189,7 +189,7 @@ extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
         numberOfTestsLabel.text = title
     }
     
-    func displayImage(with imageData: Data) {
+    func displayCourseImage(with imageData: Data) {
         courseImage.image = UIImage(data: imageData)
         activityIndicator.stopAnimating()
     }

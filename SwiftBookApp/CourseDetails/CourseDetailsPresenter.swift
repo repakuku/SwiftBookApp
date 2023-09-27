@@ -52,7 +52,7 @@ extension CourseDetailsPresenter: CourseDetailsInteractorOutputProtocol {
     
     func receiveCourseImageData(imageData: Data?) {
         guard let imageData else { return }
-        view.displayImage(with: imageData)
+        view.displayCourseImage(with: imageData)
     }
     
     func receiveFavoriteStatus(with status: Bool) {
