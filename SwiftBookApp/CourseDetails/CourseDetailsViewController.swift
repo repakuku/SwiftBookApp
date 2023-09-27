@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CourseDetailsViewInputProtocol: AnyObject {
-    func displayCourseName(_ courseName: String)
+    func displayCourseName(with title: String)
 }
 
 protocol CourseDetailsViewOutputProtocol {
@@ -99,7 +99,6 @@ final class CourseDetailsViewController: UIViewController {
     private func setupUI() {
         setStatusForFavoriteButton(isFavorite)
         
-//        courseNameLabel.text = course.name
 //        numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
 //        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
         
@@ -170,7 +169,7 @@ final class CourseDetailsViewController: UIViewController {
 
 // MARK: - CourseDetailsViewInputProtocol
 extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
-    func displayCourseName(_ courseName: String) {
+    func displayCourseName(with courseName: String) {
         courseNameLabel.text = courseName
     }
 }

@@ -29,6 +29,6 @@ final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
 extension CourseDetailsPresenter: CourseDetailsInteractorOutputProtocol {
     func receiveCourseDetailsData(courseDetails: CourseDetailsDataStore) {
         let courseName = courseDetails.courseName
-        view.displayCourseName(courseName)
+        view.displayCourseName(with: courseName)
     }
 }
