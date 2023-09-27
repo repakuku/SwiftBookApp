@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+protocol CourseDetailsInteractorInputProtocol {
+    
+}
+
+protocol CourseDetailsInteractorOutputProtocol: AnyObject {
+    
+}
+
+final class CourseDetailsInteractor: CourseDetailsInteractorInputProtocol {
+    
+}

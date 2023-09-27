@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+protocol CourseDetailsConfiguratorInputProtocol {
+    func configure(withView view: CourseDetailsViewController, and course: Course)
+}
+
+final class CourseDetailsConfigurator: CourseDetailsConfiguratorInputProtocol {
+    func configure(withView view: CourseDetailsViewController, and course: Course) {
+        
+    }
+}

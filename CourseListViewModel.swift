@@ -11,7 +11,7 @@ protocol CourseListViewModelProtocol {
     func fetchCourses(completion: @escaping () -> Void)
     func numberOfRows() -> Int
     func getCourseCellViewModel(for indexPath: IndexPath) -> CourseCellViewModelProtocol
-    func getCourseDetailsViewModel(for indexPath: IndexPath) -> CourseDetailsViewModelProtocol
+    func getCourse(for indexPath: IndexPath) -> Course
 }
 
 final class CourseListViewModel: CourseListViewModelProtocol {
@@ -32,7 +32,7 @@ final class CourseListViewModel: CourseListViewModelProtocol {
         CourseCellViewModel(course: courses[indexPath.row])
     }
     
-    func getCourseDetailsViewModel(for indexPath: IndexPath) -> CourseDetailsViewModelProtocol {
-        CourseDetailsViewModel(course: courses[indexPath.row])
+    func getCourse(for indexPath: IndexPath) -> Course {
+        courses[indexPath.row]
     }
 }

@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+struct CourseDetailsDataStore {
+    
+}
+
+final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
+    var interactor: CourseDetailsInteractorInputProtocol!
+    
+    init(view: CourseDetailsViewInputProtocol) {
+        
+    }
+    
+    func showDetails() {
+        
+    }
+}
