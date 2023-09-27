@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CourseDetailsViewInputProtocol: AnyObject {
-    
+    func displayCourseName(_ courseName: String)
 }
 
 protocol CourseDetailsViewOutputProtocol {
@@ -20,7 +20,7 @@ final class CourseDetailsViewController: UIViewController {
     
     var course: Course!
     var presenter: CourseDetailsViewOutputProtocol!
-    var configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
+    private let configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
     
     private var isFavorite = false
     
@@ -80,8 +80,6 @@ final class CourseDetailsViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        configurator.configure(withView: self, and: course)
-        
         setupSubview(
             courseNameLabel,
             courseImage,
@@ -92,6 +90,8 @@ final class CourseDetailsViewController: UIViewController {
         
         setupConstraints()
         setupUI()
+        
+        configurator.configure(withView: self, and: course)
         presenter.showDetails()
     }
     
@@ -99,17 +99,17 @@ final class CourseDetailsViewController: UIViewController {
     private func setupUI() {
         setStatusForFavoriteButton(isFavorite)
         
-        courseNameLabel.text = course.name
-        numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
-        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
+//        courseNameLabel.text = course.name
+//        numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
+//        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
         
-        DispatchQueue.global().async { [unowned self] in
-            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
-            
-            DispatchQueue.main.async { [unowned self] in
-                courseImage.image = UIImage(data: imageData)
-            }
-        }
+//        DispatchQueue.global().async { [unowned self] in
+//            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
+//            
+//            DispatchQueue.main.async { [unowned self] in
+//                courseImage.image = UIImage(data: imageData)
+//            }
+//        }
     }
     
     private func setStatusForFavoriteButton(_ status: Bool) {
@@ -168,6 +168,9 @@ final class CourseDetailsViewController: UIViewController {
     }
 }
 
+// MARK: - CourseDetailsViewInputProtocol
 extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
-    
+    func displayCourseName(_ courseName: String) {
+        courseNameLabel.text = courseName
+    }
 }
