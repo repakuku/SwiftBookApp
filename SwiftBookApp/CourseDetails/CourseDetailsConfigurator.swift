@@ -13,6 +13,7 @@ protocol CourseDetailsConfiguratorInputProtocol {
 
 final class CourseDetailsConfigurator: CourseDetailsConfiguratorInputProtocol {
     func configure(withView view: CourseDetailsViewController, and course: Course) {
-        
+        let presenter = CourseDetailsPresenter(view: view)
+        view.presenter = presenter
     }
 }

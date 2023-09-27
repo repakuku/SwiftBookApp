@@ -92,7 +92,7 @@ final class CourseDetailsViewController: UIViewController {
         
         setupConstraints()
         setupUI()
-//        presenter.showDetails()
+        presenter.showDetails()
     }
     
     // MARK: - Setup UI
