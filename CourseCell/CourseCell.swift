@@ -10,7 +10,7 @@ import UIKit
 final class CourseCell: UITableViewCell {
     
     private var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.color = .black
         activityIndicator.startAnimating()
