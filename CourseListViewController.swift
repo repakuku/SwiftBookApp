@@ -11,12 +11,10 @@ final class CourseListViewController: UIViewController {
     
     // MARK: - Private Properties
     private let cellID = "course"
-    private var activityIndicator: UIActivityIndicatorView?
     private var viewModel: CourseListViewModelProtocol! {
         didSet {
             viewModel.fetchCourses { [weak self] in
                 self?.tableView.reloadData()
-                self?.activityIndicator?.stopAnimating()
             }
         }
     }
@@ -38,20 +36,17 @@ final class CourseListViewController: UIViewController {
         viewModel = CourseListViewModel()
         view.addSubview(tableView)
         setupConstraints()
-        activityIndicator = showActivityIndicator(in: view)
         setupNavigationBar()
     }
     
     // MARK: - Setup UI
     private func showActivityIndicator(in view: UIView) -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.color = .black
         activityIndicator.startAnimating()
-        activityIndicator.center = view.center
         activityIndicator.hidesWhenStopped = true
-        
-        view.addSubview(activityIndicator)
-        
+        tableView.addSubview(activityIndicator)
         return activityIndicator
     }
     
@@ -93,7 +88,6 @@ extension CourseListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
         cell.viewModel = viewModel.getCourseCellViewModel(for: indexPath)
-        
         return cell
     }
 }
