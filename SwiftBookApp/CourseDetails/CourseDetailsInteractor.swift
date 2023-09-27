@@ -29,7 +29,8 @@ final class CourseDetailsInteractor: CourseDetailsInteractorInputProtocol {
     func provideCourseDetailsData() {
         let courseDetailsDataStore = CourseDetailsDataStore(
             courseName: course.name,
-            numberOfLessons: course.numberOfLessons
+            numberOfLessons: course.numberOfLessons,
+            numberOfTests: course.numberOfTests
         )
         
         presenter.receiveCourseDetailsData(courseDetails: courseDetailsDataStore)

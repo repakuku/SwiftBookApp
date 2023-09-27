@@ -10,6 +10,7 @@ import UIKit
 protocol CourseDetailsViewInputProtocol: AnyObject {
     func displayCourseName(with title: String)
     func displayNumberOfLessons(with title: String)
+    func displayNumberOfTests(with title: String)
 }
 
 protocol CourseDetailsViewOutputProtocol {
@@ -100,7 +101,6 @@ final class CourseDetailsViewController: UIViewController {
     private func setupUI() {
         setStatusForFavoriteButton(isFavorite)
         
-//        numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
 //        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
         
 //        DispatchQueue.global().async { [unowned self] in
@@ -176,5 +176,9 @@ extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
     
     func displayNumberOfLessons(with title: String) {
         numberOfLessonsLabel.text = title
+    }
+    
+    func displayNumberOfTests(with title: String) {
+        numberOfTestsLabel.text = title
     }
 }
