@@ -11,6 +11,7 @@ struct CourseDetailsDataStore {
     let courseName: String
     let numberOfLessons: Int
     let numberOfTests: Int
+    let imageData: Data?
 }
 
 final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
@@ -33,8 +34,12 @@ extension CourseDetailsPresenter: CourseDetailsInteractorOutputProtocol {
         let courseNameTitle = courseDetails.courseName
         let numberOfLessonsTitle = "Number of lessons: \(courseDetails.numberOfLessons)"
         let numberOfTestsTitle = "Number of tests: \(courseDetails.numberOfTests)"
+        
         view.displayCourseName(with: courseNameTitle)
         view.displayNumberOfLessons(with: numberOfLessonsTitle)
         view.displayNumberOfTests(with: numberOfTestsTitle)
+        
+        guard let imageData = courseDetails.imageData else { return }
+        view.displayImage(with: imageData)
     }
 }

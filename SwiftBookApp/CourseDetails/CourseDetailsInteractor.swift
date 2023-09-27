@@ -27,12 +27,19 @@ final class CourseDetailsInteractor: CourseDetailsInteractorInputProtocol {
     }
     
     func provideCourseDetailsData() {
-        let courseDetailsDataStore = CourseDetailsDataStore(
-            courseName: course.name,
-            numberOfLessons: course.numberOfLessons,
-            numberOfTests: course.numberOfTests
-        )
-        
-        presenter.receiveCourseDetailsData(courseDetails: courseDetailsDataStore)
+        DispatchQueue.global().async { [unowned self] in
+            let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl)
+            
+            DispatchQueue.main.async { [unowned self] in
+                let courseDetailsDataStore = CourseDetailsDataStore(
+                    courseName: course.name,
+                    numberOfLessons: course.numberOfLessons,
+                    numberOfTests: course.numberOfTests,
+                    imageData: imageData
+                )
+                
+                presenter.receiveCourseDetailsData(courseDetails: courseDetailsDataStore)
+            }
+        }
     }
 }

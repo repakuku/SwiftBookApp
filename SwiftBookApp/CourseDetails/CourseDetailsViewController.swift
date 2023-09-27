@@ -11,6 +11,7 @@ protocol CourseDetailsViewInputProtocol: AnyObject {
     func displayCourseName(with title: String)
     func displayNumberOfLessons(with title: String)
     func displayNumberOfTests(with title: String)
+    func displayImage(with imageData: Data)
 }
 
 protocol CourseDetailsViewOutputProtocol {
@@ -100,16 +101,6 @@ final class CourseDetailsViewController: UIViewController {
     // MARK: - Setup UI
     private func setupUI() {
         setStatusForFavoriteButton(isFavorite)
-        
-//        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
-        
-//        DispatchQueue.global().async { [unowned self] in
-//            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
-//            
-//            DispatchQueue.main.async { [unowned self] in
-//                courseImage.image = UIImage(data: imageData)
-//            }
-//        }
     }
     
     private func setStatusForFavoriteButton(_ status: Bool) {
@@ -180,5 +171,9 @@ extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
     
     func displayNumberOfTests(with title: String) {
         numberOfTestsLabel.text = title
+    }
+    
+    func displayImage(with imageData: Data) {
+        courseImage.image = UIImage(data: imageData)
     }
 }
