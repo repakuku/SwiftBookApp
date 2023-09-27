@@ -46,8 +46,6 @@ extension CourseDetailsPresenter: CourseDetailsInteractorOutputProtocol {
         view.displayNumberOfLessons(with: numberOfLessonsTitle)
         view.displayNumberOfTests(with: numberOfTestsTitle)
         view.displayImageForFavoriteButton(with: courseDetails.isFavorite)
-        
-
     }
     
     func receiveCourseImageData(imageData: Data?) {
