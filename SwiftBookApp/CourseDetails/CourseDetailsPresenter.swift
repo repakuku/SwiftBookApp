@@ -9,6 +9,7 @@ import Foundation
 
 struct CourseDetailsDataStore {
     let courseName: String
+    let numberOfLessons: Int
 }
 
 final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
@@ -28,7 +29,9 @@ final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
 // MARK: - CourseDetailsInteractorOutputProtocol
 extension CourseDetailsPresenter: CourseDetailsInteractorOutputProtocol {
     func receiveCourseDetailsData(courseDetails: CourseDetailsDataStore) {
-        let courseName = courseDetails.courseName
-        view.displayCourseName(with: courseName)
+        let courseNameTitle = courseDetails.courseName
+        let numberOfLessonsTitle = "Number of lessons: \(courseDetails.numberOfLessons)"
+        view.displayCourseName(with: courseNameTitle)
+        view.displayNumberOfLessons(with: numberOfLessonsTitle)
     }
 }

@@ -9,6 +9,7 @@ import UIKit
 
 protocol CourseDetailsViewInputProtocol: AnyObject {
     func displayCourseName(with title: String)
+    func displayNumberOfLessons(with title: String)
 }
 
 protocol CourseDetailsViewOutputProtocol {
@@ -169,7 +170,11 @@ final class CourseDetailsViewController: UIViewController {
 
 // MARK: - CourseDetailsViewInputProtocol
 extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
-    func displayCourseName(with courseName: String) {
-        courseNameLabel.text = courseName
+    func displayCourseName(with title: String) {
+        courseNameLabel.text = title
+    }
+    
+    func displayNumberOfLessons(with title: String) {
+        numberOfLessonsLabel.text = title
     }
 }
