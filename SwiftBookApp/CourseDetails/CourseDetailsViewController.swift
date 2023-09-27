@@ -110,6 +110,8 @@ final class CourseDetailsViewController: UIViewController {
         setupConstraints()
         
         configurator.configure(withView: self, and: course)
+        
+        // Informing the Presenter to show the details information
         presenter.showDetails()
     }
     

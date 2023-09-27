@@ -7,11 +7,12 @@
 
 import Foundation
 
+// Storing values in properties defines the data that needs to be displayed
 struct CourseDetailsDataStore {
     let courseName: String
     let numberOfLessons: Int
     let numberOfTests: Int
-    let imageData: Data?
+    var imageData: Data?
     let isFavorite: Bool
 }
 
@@ -26,6 +27,7 @@ final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
     
     func showDetails() {
         interactor.provideCourseDetailsData()
+        interactor.provideCourseImageData()
     }
     
     func favoriteButtonPressed() {
@@ -45,7 +47,11 @@ extension CourseDetailsPresenter: CourseDetailsInteractorOutputProtocol {
         view.displayNumberOfTests(with: numberOfTestsTitle)
         view.displayImageForFavoriteButton(with: courseDetails.isFavorite)
         
-        guard let imageData = courseDetails.imageData else { return }
+
+    }
+    
+    func receiveCourseImageData(imageData: Data?) {
+        guard let imageData else { return }
         view.displayImage(with: imageData)
     }
     

@@ -9,13 +9,16 @@ import Foundation
 
 protocol CourseDetailsInteractorInputProtocol {
     var isFavorite: Bool { get }
+    var imageData: Data? { get }
     init(presenter: CourseDetailsInteractorOutputProtocol, course: Course)
     func provideCourseDetailsData()
+    func provideCourseImageData()
     func toggleFavoriteStatus()
 }
 
 protocol CourseDetailsInteractorOutputProtocol: AnyObject {
     func receiveCourseDetailsData(courseDetails: CourseDetailsDataStore)
+    func receiveCourseImageData(imageData: Data?)
     func receiveFavoriteStatus(with status: Bool)
 }
 
@@ -28,6 +31,8 @@ final class CourseDetailsInteractor: CourseDetailsInteractorInputProtocol {
         }
     }
     
+    var imageData: Data?
+    
     private let course: Course
     
     unowned private var presenter: CourseDetailsInteractorOutputProtocol
@@ -38,19 +43,25 @@ final class CourseDetailsInteractor: CourseDetailsInteractorInputProtocol {
     }
     
     func provideCourseDetailsData() {
+        var courseDetailsDataStore = CourseDetailsDataStore(
+            courseName: course.name,
+            numberOfLessons: course.numberOfLessons,
+            numberOfTests: course.numberOfTests,
+            imageData: imageData,
+            isFavorite: isFavorite
+        )
+        
+        presenter.receiveCourseDetailsData(courseDetails: courseDetailsDataStore)
+        
+        
+    }
+    
+    func provideCourseImageData() {
         DispatchQueue.global().async { [unowned self] in
             let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl)
             
             DispatchQueue.main.async { [unowned self] in
-                let courseDetailsDataStore = CourseDetailsDataStore(
-                    courseName: course.name,
-                    numberOfLessons: course.numberOfLessons,
-                    numberOfTests: course.numberOfTests,
-                    imageData: imageData,
-                    isFavorite: isFavorite
-                )
-                
-                presenter.receiveCourseDetailsData(courseDetails: courseDetailsDataStore)
+                presenter.receiveCourseImageData(imageData: imageData)
             }
         }
     }
