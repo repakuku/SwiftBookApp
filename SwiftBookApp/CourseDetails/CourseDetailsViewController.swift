@@ -7,25 +7,30 @@
 
 import UIKit
 
+// Get from Presenter
 protocol CourseDetailsViewInputProtocol: AnyObject {
     func displayCourseName(with title: String)
     func displayNumberOfLessons(with title: String)
     func displayNumberOfTests(with title: String)
     func displayImage(with imageData: Data)
+    func displayImageForFavoriteButton(with status: Bool)
 }
 
+// Send to Presenter
 protocol CourseDetailsViewOutputProtocol {
     init(view: CourseDetailsViewInputProtocol)
     func showDetails()
+    func favoriteButtonPressed()
 }
 
 final class CourseDetailsViewController: UIViewController {
     
     var course: Course!
-    var presenter: CourseDetailsViewOutputProtocol!
-    private let configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
     
-    private var isFavorite = false
+    // Presenter
+    var presenter: CourseDetailsViewOutputProtocol!
+    // Configurator
+    private let configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -60,8 +65,7 @@ final class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            isFavorite.toggle()
-            setStatusForFavoriteButton(isFavorite)
+            presenter.favoriteButtonPressed()
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -104,21 +108,12 @@ final class CourseDetailsViewController: UIViewController {
         courseImage.addSubview(activityIndicator)
         
         setupConstraints()
-        setupUI()
         
         configurator.configure(withView: self, and: course)
         presenter.showDetails()
     }
     
     // MARK: - Setup UI
-    private func setupUI() {
-        setStatusForFavoriteButton(isFavorite)
-    }
-    
-    private func setStatusForFavoriteButton(_ status: Bool) {
-        favoriteButton.tintColor = status ? .systemRed : .systemGray
-    }
-    
     private func setupSubview(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
@@ -195,5 +190,9 @@ extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
     func displayImage(with imageData: Data) {
         courseImage.image = UIImage(data: imageData)
         activityIndicator.stopAnimating()
+    }
+    
+    func displayImageForFavoriteButton(with status: Bool) {
+        favoriteButton.tintColor = status ? .systemRed : .systemGray
     }
 }

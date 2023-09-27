@@ -12,12 +12,13 @@ struct CourseDetailsDataStore {
     let numberOfLessons: Int
     let numberOfTests: Int
     let imageData: Data?
+    let isFavorite: Bool
 }
 
 final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
-    unowned private let view: CourseDetailsViewInputProtocol
-    
     var interactor: CourseDetailsInteractorInputProtocol!
+    
+    unowned private let view: CourseDetailsViewInputProtocol
     
     init(view: CourseDetailsViewInputProtocol) {
         self.view = view
@@ -25,6 +26,10 @@ final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
     
     func showDetails() {
         interactor.provideCourseDetailsData()
+    }
+    
+    func favoriteButtonPressed() {
+        interactor.toggleFavoriteStatus()
     }
 }
 
@@ -38,8 +43,13 @@ extension CourseDetailsPresenter: CourseDetailsInteractorOutputProtocol {
         view.displayCourseName(with: courseNameTitle)
         view.displayNumberOfLessons(with: numberOfLessonsTitle)
         view.displayNumberOfTests(with: numberOfTestsTitle)
+        view.displayImageForFavoriteButton(with: courseDetails.isFavorite)
         
         guard let imageData = courseDetails.imageData else { return }
         view.displayImage(with: imageData)
+    }
+    
+    func receiveFavoriteStatus(with status: Bool) {
+        view.displayImageForFavoriteButton(with: status)
     }
 }
