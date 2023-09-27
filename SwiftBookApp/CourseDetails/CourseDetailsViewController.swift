@@ -7,9 +7,22 @@
 
 import UIKit
 
+protocol CourseDetailsViewInputProtocol: AnyObject {
+    
+}
+
+protocol CourseDetailsViewOutputProtocol {
+    init(view: CourseDetailsViewInputProtocol)
+    func showDetails()
+}
+
 final class CourseDetailsViewController: UIViewController {
     
-    var courseDetailsViewModel: CourseDetailsViewModelProtocol!
+    var course: Course!
+    var presenter: CourseDetailsViewOutputProtocol!
+    var configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
+    
+    private var isFavorite = false
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -44,7 +57,8 @@ final class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            courseDetailsViewModel.favoriteButtonPressed()
+            isFavorite.toggle()
+            setStatusForFavoriteButton(isFavorite)
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +80,8 @@ final class CourseDetailsViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        configurator.configure(withView: self, and: course)
+        
         setupSubview(
             courseNameLabel,
             courseImage,
@@ -76,22 +92,19 @@ final class CourseDetailsViewController: UIViewController {
         
         setupConstraints()
         setupUI()
+        presenter.showDetails()
     }
     
     // MARK: - Setup UI
     private func setupUI() {
-        setStatusForFavoriteButton(courseDetailsViewModel.isFavorite.value)
+        setStatusForFavoriteButton(isFavorite)
         
-        courseDetailsViewModel.isFavorite.bind { [unowned self] value in
-            setStatusForFavoriteButton(value)
-        }
-        
-        courseNameLabel.text = courseDetailsViewModel.courseName
-        numberOfLessonsLabel.text = courseDetailsViewModel.numberOfLessons
-        numberOfTestsLabel.text = courseDetailsViewModel.numberOfTests
+        courseNameLabel.text = course.name
+        numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
+        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
         
         DispatchQueue.global().async { [unowned self] in
-            guard let imageData = courseDetailsViewModel.imageData else { return }
+            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
             
             DispatchQueue.main.async { [unowned self] in
                 courseImage.image = UIImage(data: imageData)
@@ -153,4 +166,8 @@ final class CourseDetailsViewController: UIViewController {
             ]
         )
     }
+}
+
+extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
+    
 }
