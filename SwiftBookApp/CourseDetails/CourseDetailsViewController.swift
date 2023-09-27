@@ -77,6 +77,16 @@ final class CourseDetailsViewController: UIViewController {
         return button
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = .black
+        activityIndicator.startAnimating()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.center = courseImage.center
+        return activityIndicator
+    }()
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +100,8 @@ final class CourseDetailsViewController: UIViewController {
             numberOfTestsLabel,
             favoriteButton
         )
+        
+        courseImage.addSubview(activityIndicator)
         
         setupConstraints()
         setupUI()
@@ -156,6 +168,13 @@ final class CourseDetailsViewController: UIViewController {
                 favoriteButton.bottomAnchor.constraint(equalTo: courseImage.bottomAnchor)
             ]
         )
+        
+        NSLayoutConstraint.activate(
+            [
+                activityIndicator.centerXAnchor.constraint(equalTo: courseImage.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: courseImage.centerYAnchor)
+            ]
+        )
     }
 }
 
@@ -175,5 +194,6 @@ extension CourseDetailsViewController: CourseDetailsViewInputProtocol {
     
     func displayImage(with imageData: Data) {
         courseImage.image = UIImage(data: imageData)
+        activityIndicator.stopAnimating()
     }
 }
