@@ -12,7 +12,6 @@ struct CourseDetailsDataStore {
     let courseName: String
     let numberOfLessons: Int
     let numberOfTests: Int
-    var imageData: Data?
     let isFavorite: Bool
 }
 

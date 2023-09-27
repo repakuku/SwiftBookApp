@@ -43,11 +43,10 @@ final class CourseDetailsInteractor: CourseDetailsInteractorInputProtocol {
     }
     
     func provideCourseDetailsData() {
-        var courseDetailsDataStore = CourseDetailsDataStore(
+        let courseDetailsDataStore = CourseDetailsDataStore(
             courseName: course.name,
             numberOfLessons: course.numberOfLessons,
             numberOfTests: course.numberOfTests,
-            imageData: imageData,
             isFavorite: isFavorite
         )
         

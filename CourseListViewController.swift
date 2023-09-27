@@ -40,16 +40,6 @@ final class CourseListViewController: UIViewController {
     }
     
     // MARK: - Setup UI
-    private func showActivityIndicator(in view: UIView) -> UIActivityIndicatorView {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.color = .black
-        activityIndicator.startAnimating()
-        activityIndicator.hidesWhenStopped = true
-        tableView.addSubview(activityIndicator)
-        return activityIndicator
-    }
-    
     private func setupNavigationBar() {
         title = "Courses"
         navigationController?.navigationBar.prefersLargeTitles = true
