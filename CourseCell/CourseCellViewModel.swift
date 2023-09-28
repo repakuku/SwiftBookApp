@@ -8,7 +8,6 @@
 import Foundation
 
 protocol CourseCellViewModelProtocol {
-    var cellIdentifier: String { get }
     var cellHeight: Double { get }
     var courseName: String { get }
     var imageData: Data? { get }
@@ -21,10 +20,6 @@ protocol CourseSectionViewModelProtocol {
 }
 
 final class CourseCellViewModel: CourseCellViewModelProtocol {
-    var cellIdentifier: String {
-        "course"
-    }
-    
     var cellHeight: Double {
         100
     }
