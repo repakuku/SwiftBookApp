@@ -7,10 +7,24 @@
 
 import UIKit
 
+protocol CourseListViewInputProtocol: AnyObject {
+    
+}
+
+protocol CourseListViewOutputProtocol {
+    init(view: CourseListViewInputProtocol)
+    func viewDidLoad()
+}
+
 final class CourseListViewController: UIViewController {
+    
+    var presenter: CourseListPresenter!
     
     // MARK: - Private Properties
     private let cellID = "course"
+    private let configurator: CourseListConfiguratorInputProtocol = CourseListConfigurator()
+    private var courses: [Course] = []
+    
     private var viewModel: CourseListViewModelProtocol! {
         didSet {
             viewModel.fetchCourses { [weak self] in
@@ -33,10 +47,14 @@ final class CourseListViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configurator.configure(withView: self)
+        
         viewModel = CourseListViewModel()
         view.addSubview(tableView)
         setupConstraints()
         setupNavigationBar()
+        
+        presenter.viewDidLoad()
     }
     
     // MARK: - Setup UI
@@ -90,4 +108,9 @@ extension CourseListViewController: UITableViewDelegate {
         courseDetailsVC.course = viewModel.getCourse(for: indexPath)
         navigationController?.pushViewController(courseDetailsVC, animated: true)
     }
+}
+
+// MARK: - CourseListViewinputProtocol
+extension CourseListViewController: CourseListViewInputProtocol {
+    
 }

@@ -35,7 +35,7 @@ final class CourseDetailsInteractor: CourseDetailsInteractorInputProtocol {
     
     private let course: Course
     
-    unowned private var presenter: CourseDetailsInteractorOutputProtocol
+    private unowned var presenter: CourseDetailsInteractorOutputProtocol
     
     init(presenter: CourseDetailsInteractorOutputProtocol, course: Course) {
         self.presenter = presenter

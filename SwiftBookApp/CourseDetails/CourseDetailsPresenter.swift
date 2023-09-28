@@ -18,7 +18,7 @@ struct CourseDetailsDataStore {
 final class CourseDetailsPresenter: CourseDetailsViewOutputProtocol {
     var interactor: CourseDetailsInteractorInputProtocol!
     
-    unowned private let view: CourseDetailsViewInputProtocol
+    private unowned let view: CourseDetailsViewInputProtocol
     
     init(view: CourseDetailsViewInputProtocol) {
         self.view = view
