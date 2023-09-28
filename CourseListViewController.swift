@@ -7,17 +7,23 @@
 
 import UIKit
 
+protocol CourseListViewInputProtocol: AnyObject {
+    func display(courses: [Course])
+}
+
+protocol CourseListViewOutputProtocol {
+    init(view: CourseListViewInputProtocol)
+    func viewDidLoad()
+}
+
 final class CourseListViewController: UIViewController {
+    
+    var presenter: CourseListPresenter!
     
     // MARK: - Private Properties
     private let cellID = "course"
-    private var viewModel: CourseListViewModelProtocol! {
-        didSet {
-            viewModel.fetchCourses { [weak self] in
-                self?.tableView.reloadData()
-            }
-        }
-    }
+    private let configurator: CourseListConfiguratorInputProtocol = CourseListConfigurator()
+    private var courses: [Course] = []
     
     // MARK: - Views
     private lazy var tableView: UITableView = {
@@ -33,23 +39,16 @@ final class CourseListViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = CourseListViewModel()
+        configurator.configure(withView: self)
+        
         view.addSubview(tableView)
         setupConstraints()
         setupNavigationBar()
+        
+        presenter.viewDidLoad()
     }
     
     // MARK: - Setup UI
-    private func showActivityIndicator(in view: UIView) -> UIActivityIndicatorView {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.color = .black
-        activityIndicator.startAnimating()
-        activityIndicator.hidesWhenStopped = true
-        tableView.addSubview(activityIndicator)
-        return activityIndicator
-    }
-    
     private func setupNavigationBar() {
         title = "Courses"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -81,13 +80,14 @@ final class CourseListViewController: UIViewController {
 extension CourseListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRows()
+        courses.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
-        cell.viewModel = viewModel.getCourseCellViewModel(for: indexPath)
+        let course = courses[indexPath.row]
+        cell.configure(with: course)
         return cell
     }
 }
@@ -97,7 +97,15 @@ extension CourseListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let courseDetailsVC = CourseDetailsViewController()
-        courseDetailsVC.course = viewModel.getCourse(for: indexPath)
+        courseDetailsVC.course = courses[indexPath.row]
         navigationController?.pushViewController(courseDetailsVC, animated: true)
+    }
+}
+
+// MARK: - CourseListViewinputProtocol
+extension CourseListViewController: CourseListViewInputProtocol {
+    func display(courses: [Course]) {
+        self.courses = courses
+        tableView.reloadData()
     }
 }
