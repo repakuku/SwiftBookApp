@@ -21,7 +21,8 @@ final class CourseListRouter: CourseListRouterInputProtocol {
     
     func openCourseDetailsViewController(with course: Course) {
         let courseDetailsVC = CourseDetailsViewController()
-        courseDetailsVC.course = course
+        let configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
+        configurator.configure(withView: courseDetailsVC, and: course)
         view.navigationController?.pushViewController(courseDetailsVC, animated: true)
     }
 }
