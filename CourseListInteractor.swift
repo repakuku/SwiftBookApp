@@ -13,12 +13,12 @@ protocol CourseListInteractorInputProtocol {
 }
 
 protocol CourseListInteractorOutputProtocol: AnyObject {
-    func receiveCoursesData(coursesData: CourseListDataStore)
+    func courseDidReceive(with coursesData: CourseListDataStore)
 }
 
 final class CourseListInteractor: CourseListInteractorInputProtocol {
     
-    private unowned var presenter: CourseListInteractorOutputProtocol
+    private unowned let presenter: CourseListInteractorOutputProtocol
     
     init(presenter: CourseListInteractorOutputProtocol) {
         self.presenter = presenter
@@ -26,8 +26,8 @@ final class CourseListInteractor: CourseListInteractorInputProtocol {
     
     func fetchCourses() {
         NetworkManager.shared.fetchData { [unowned self] courses in
-            let courseListDataStore = CourseListDataStore(courses: courses)
-            presenter.receiveCoursesData(coursesData: courseListDataStore)
+            let coursesData = CourseListDataStore(courses: courses)
+            presenter.courseDidReceive(with: coursesData)
         }
     }
 }

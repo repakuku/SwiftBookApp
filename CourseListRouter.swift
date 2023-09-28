@@ -9,12 +9,15 @@ import Foundation
 
 protocol CourseListRouterInputProtocol {
     init(view: CourseListViewInputProtocol)
+    
 }
 
 final class CourseListRouter: CourseListRouterInputProtocol {
-    private unowned var view: CourseListViewInputProtocol
+    private unowned let view: CourseListViewInputProtocol
     
     init(view: CourseListViewInputProtocol) {
         self.view = view
     }
+    
+    
 }

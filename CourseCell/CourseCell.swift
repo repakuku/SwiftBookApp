@@ -18,29 +18,31 @@ final class CourseCell: UITableViewCell {
         return activityIndicator
     }()
     
-    var viewModel: CourseCellViewModelProtocol! {
-        didSet {
-            contentView.addSubview(activityIndicator)
+    func configure(with course: Course) {
+        contentView.addSubview(activityIndicator)
+        
+        setupConstraints()
+        
+        let viewModel = CourseCellViewModel(course: course)
+        
+        DispatchQueue.global().async { [unowned self] in
+            guard let imageData = viewModel.imageData else { return }
             
-            NSLayoutConstraint.activate(
-                [
-                    activityIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                    activityIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-                ]
-            )
-            
-            DispatchQueue.global().async { [unowned self] in
-                guard let imageData = viewModel.imageData else { return }
-                
-                DispatchQueue.main.async { [unowned self] in
-                    var content = defaultContentConfiguration()
-                    content.text = viewModel.courseName
-                    content.image = UIImage(data: imageData)
-                    contentConfiguration = content
-                }
+            DispatchQueue.main.async { [unowned self] in
+                var content = defaultContentConfiguration()
+                content.text = viewModel.courseName
+                content.image = UIImage(data: imageData)
+                contentConfiguration = content
             }
-            
-            
         }
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate(
+            [
+                activityIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            ]
+        )
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CourseListViewInputProtocol: AnyObject {
-    
+    func display(courses: [Course])
 }
 
 protocol CourseListViewOutputProtocol {
@@ -24,14 +24,6 @@ final class CourseListViewController: UIViewController {
     private let cellID = "course"
     private let configurator: CourseListConfiguratorInputProtocol = CourseListConfigurator()
     private var courses: [Course] = []
-    
-    private var viewModel: CourseListViewModelProtocol! {
-        didSet {
-            viewModel.fetchCourses { [weak self] in
-                self?.tableView.reloadData()
-            }
-        }
-    }
     
     // MARK: - Views
     private lazy var tableView: UITableView = {
@@ -49,7 +41,6 @@ final class CourseListViewController: UIViewController {
         super.viewDidLoad()
         configurator.configure(withView: self)
         
-        viewModel = CourseListViewModel()
         view.addSubview(tableView)
         setupConstraints()
         setupNavigationBar()
@@ -89,13 +80,14 @@ final class CourseListViewController: UIViewController {
 extension CourseListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRows()
+        courses.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
-        cell.viewModel = viewModel.getCourseCellViewModel(for: indexPath)
+        let course = courses[indexPath.row]
+        cell.configure(with: course)
         return cell
     }
 }
@@ -105,12 +97,15 @@ extension CourseListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let courseDetailsVC = CourseDetailsViewController()
-        courseDetailsVC.course = viewModel.getCourse(for: indexPath)
+        courseDetailsVC.course = courses[indexPath.row]
         navigationController?.pushViewController(courseDetailsVC, animated: true)
     }
 }
 
 // MARK: - CourseListViewinputProtocol
 extension CourseListViewController: CourseListViewInputProtocol {
-    
+    func display(courses: [Course]) {
+        self.courses = courses
+        tableView.reloadData()
+    }
 }
