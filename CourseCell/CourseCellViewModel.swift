@@ -8,13 +8,27 @@
 import Foundation
 
 protocol CourseCellViewModelProtocol {
+    var cellIdentifier: String { get }
+    var cellHeight: Double { get }
     var courseName: String { get }
     var imageData: Data? { get }
     init(course: Course)
 }
 
-final class CourseCellViewModel: CourseCellViewModelProtocol {
+protocol CourseSectionViewModelProtocol {
+    var rows: [CourseCellViewModelProtocol] { get }
+    var numberOfRows: Int { get }
+}
 
+final class CourseCellViewModel: CourseCellViewModelProtocol {
+    var cellIdentifier: String {
+        "course"
+    }
+    
+    var cellHeight: Double {
+        100
+    }
+    
     var courseName: String {
         course.name
     }
@@ -27,5 +41,13 @@ final class CourseCellViewModel: CourseCellViewModelProtocol {
     
     init(course: Course) {
         self.course = course
+    }
+}
+
+final class CourseSectionViewModel: CourseSectionViewModelProtocol {
+    var rows: [CourseCellViewModelProtocol] = []
+    
+    var numberOfRows: Int {
+        rows.count
     }
 }

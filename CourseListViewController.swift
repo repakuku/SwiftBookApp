@@ -87,7 +87,7 @@ extension CourseListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
         let course = courses[indexPath.row]
-        cell.configure(with: course)
+        cell.viewModel = CourseCellViewModel(course: course)
         return cell
     }
 }
