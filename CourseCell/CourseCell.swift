@@ -7,9 +7,19 @@
 
 import UIKit
 
-final class CourseCell: UITableViewCell {
+protocol CellModelRepresentable {
+    var viewModel: CourseCellViewModelProtocol? { get }
+}
+
+final class CourseCell: UITableViewCell, CellModelRepresentable {
     
-    private let activityIndicator: UIActivityIndicatorView = {
+    var viewModel: CourseCellViewModelProtocol? {
+        didSet {
+            updateView()
+        }
+    }
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.color = .black
@@ -18,12 +28,11 @@ final class CourseCell: UITableViewCell {
         return activityIndicator
     }()
     
-    func configure(with course: Course) {
+    private func updateView() {
         contentView.addSubview(activityIndicator)
-        
         setupConstraints()
         
-        let viewModel = CourseCellViewModel(course: course)
+        guard let viewModel = viewModel as? CourseCellViewModel else { return }
         
         DispatchQueue.global().async { [unowned self] in
             guard let imageData = viewModel.imageData else { return }

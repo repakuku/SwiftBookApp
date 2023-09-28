@@ -24,13 +24,8 @@ protocol CourseDetailsViewOutputProtocol {
 }
 
 final class CourseDetailsViewController: UIViewController {
-    
-    var course: Course!
-    
     // Presenter
     var presenter: CourseDetailsViewOutputProtocol!
-    // Configurator
-    private let configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -108,8 +103,6 @@ final class CourseDetailsViewController: UIViewController {
         courseImage.addSubview(activityIndicator)
         
         setupConstraints()
-        
-        configurator.configure(withView: self, and: course)
         
         // Informing the Presenter to show the details information
         presenter.showDetails()

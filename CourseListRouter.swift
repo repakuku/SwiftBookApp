@@ -8,16 +8,21 @@
 import Foundation
 
 protocol CourseListRouterInputProtocol {
-    init(view: CourseListViewInputProtocol)
-    
+    init(view: CourseListViewController)
+    func openCourseDetailsViewController(with course: Course)
 }
 
 final class CourseListRouter: CourseListRouterInputProtocol {
-    private unowned let view: CourseListViewInputProtocol
+    private unowned let view: CourseListViewController
     
-    init(view: CourseListViewInputProtocol) {
+    init(view: CourseListViewController) {
         self.view = view
     }
     
-    
+    func openCourseDetailsViewController(with course: Course) {
+        let courseDetailsVC = CourseDetailsViewController()
+        let configurator: CourseDetailsConfiguratorInputProtocol = CourseDetailsConfigurator()
+        configurator.configure(withView: courseDetailsVC, and: course)
+        view.navigationController?.pushViewController(courseDetailsVC, animated: true)
+    }
 }

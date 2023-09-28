@@ -16,6 +16,7 @@ final class CourseListPresenter: CourseListViewOutputProtocol {
     var router: CourseListRouterInputProtocol!
     
     private unowned let view: CourseListViewInputProtocol
+    private var coursesData: CourseListDataStore?
     
     init(view: CourseListViewInputProtocol) {
         self.view = view
@@ -24,11 +25,19 @@ final class CourseListPresenter: CourseListViewOutputProtocol {
     func viewDidLoad() {
         interactor.fetchCourses()
     }
+    
+    func didTapCell(at indexPath: IndexPath) {
+        guard let course = coursesData?.courses[indexPath.row] else { return }
+        router.openCourseDetailsViewController(with: course)
+    }
 }
 
 // MARK: - CourseListInteractorOutputProtocol
 extension CourseListPresenter: CourseListInteractorOutputProtocol {
     func courseDidReceive(with coursesData: CourseListDataStore) {
-        view.display(courses: coursesData.courses)
+        self.coursesData = coursesData
+        let section = CourseSectionViewModel()
+        coursesData.courses.forEach { section.rows.append(CourseCellViewModel(course: $0)) }
+        view.reloadData(for: section)
     }
 }
