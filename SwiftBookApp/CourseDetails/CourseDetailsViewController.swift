@@ -215,7 +215,8 @@ class CourseDetailsViewController: UIViewController {
     }
         
     private func passRequest() {
-        interactor?.provideCourseDetails(for: course)
+        let request = CourseDetailsRequest(course: course)
+        interactor?.provideCourseDetails(request: request)
     }
 }
 
