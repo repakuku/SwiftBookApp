@@ -22,6 +22,8 @@ class CourseDetailsViewController: UIViewController {
     var interactor: CourseDetailsBusinessLogic?
     var router: (NSObjectProtocol & CourseDetailsRoutingLogic & CourseDetailsDataPassing)?
     
+    private var isFavorite = false
+    
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
@@ -55,7 +57,7 @@ class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            
+            toggleFavorite()
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -110,6 +112,8 @@ class CourseDetailsViewController: UIViewController {
         
         setupConstraints()
         
+        loadFavoriteStatus()
+        setupUI()
         passRequest()
     }
     
@@ -184,6 +188,35 @@ class CourseDetailsViewController: UIViewController {
         
     private func passRequest() {
         interactor?.provideCourseDetails()
+    }
+    
+    private func toggleFavorite() {
+        isFavorite.toggle()
+        setStatusForFavoriteButton()
+        DataManager.shared.setFavoriteStatus(for: course.name, with: isFavorite)
+    }
+    
+    private func loadFavoriteStatus() {
+        isFavorite = DataManager.shared.getFavoriteStatus(for: course.name)
+    }
+    
+    private func setStatusForFavoriteButton() {
+        favoriteButton.tintColor = isFavorite ? .red : .gray
+    }
+    
+    private func setupUI() {
+        courseNameLabel.text = course.name
+        numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
+        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
+        
+        DispatchQueue.global().async { [unowned self] in
+            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
+            DispatchQueue.main.async { [unowned self] in
+                courseImage.image = UIImage(data: imageData)
+            }
+        }
+        
+        setStatusForFavoriteButton()
     }
 }
 
