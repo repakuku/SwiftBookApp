@@ -15,10 +15,11 @@ protocol CourseDetailsBusinessLogic {
 }
 
 protocol CourseDetailsDataStore {
-    
+    var course: Course? { get }
 }
 
 class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStore {
+    var course: Course?
     var presenter: CourseDetailsPresentationLogic?
     var worker: CourseDetailsWorker?
     
