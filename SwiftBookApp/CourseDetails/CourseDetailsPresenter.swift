@@ -19,7 +19,10 @@ class CourseDetailsPresenter: CourseDetailsPresentationLogic {
     weak var viewController: CourseDetailsDisplayLogic?
     
     func presentCourseDetails(response: CourseDetailsResponse) {
-        let viewModel = CourseDetailsViewModel(courseName: response.courseName)
+        let viewModel = CourseDetailsViewModel(
+            courseName: response.courseName
+        )
+        
         viewController?.displayCourseDetails(viewModel: viewModel)
     }
 }

@@ -176,20 +176,6 @@ class CourseDetailsViewController: UIViewController {
         )
     }
     
-    // MARK: Routing
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
-        
-    private func passRequest() {
-        interactor?.provideCourseDetails()
-    }
-    
     private func toggleFavorite() {
         isFavorite.toggle()
         setStatusForFavoriteButton()
@@ -205,7 +191,6 @@ class CourseDetailsViewController: UIViewController {
     }
     
     private func setupUI() {
-        courseNameLabel.text = course.name
         numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
         numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
         
@@ -218,8 +203,23 @@ class CourseDetailsViewController: UIViewController {
         
         setStatusForFavoriteButton()
     }
+    
+    // MARK: Routing
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
+    }
+        
+    private func passRequest() {
+        interactor?.provideCourseDetails(for: course)
+    }
 }
 
+// MARK: - CourseDetailsDisplayLogic
 extension CourseDetailsViewController: CourseDetailsDisplayLogic {
     func displayCourseDetails(viewModel: CourseDetailsViewModel) {
         courseNameLabel.text = viewModel.courseName
