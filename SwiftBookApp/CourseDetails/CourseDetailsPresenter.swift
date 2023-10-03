@@ -15,6 +15,7 @@ import Foundation
 protocol CourseDetailsPresentationLogic {
     func presentCourseDetails(response: CourseDetailsResponse)
     func presentCourseDetailsImage(response: CourseDetailsImageResponse)
+    func presentFavoriteStatus(response: CourseDetailsFavoriteStatusResponse)
 }
 
 class CourseDetailsPresenter: CourseDetailsPresentationLogic {
@@ -36,5 +37,10 @@ class CourseDetailsPresenter: CourseDetailsPresentationLogic {
     func presentCourseDetailsImage(response: CourseDetailsImageResponse) {
         let viewModel = CourseDetailsImageViewModel(imageData: response.imageData ?? Data())
         viewController?.displayCourseDetailsImage(viewModel: viewModel)
+    }
+    
+    func presentFavoriteStatus(response: CourseDetailsFavoriteStatusResponse) {
+        let viewModel = CourseDetailsFavoriteStatusViewModel(isFavorite: response.isFavorite)
+        viewController?.setFavoriteStatus(viewModel: viewModel)
     }
 }

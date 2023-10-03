@@ -15,6 +15,7 @@ import UIKit
 protocol CourseDetailsDisplayLogic: AnyObject {
     func displayCourseDetails(viewModel: CourseDetailsViewModel)
     func displayCourseDetailsImage(viewModel: CourseDetailsImageViewModel)
+    func setFavoriteStatus(viewModel: CourseDetailsFavoriteStatusViewModel)
 }
 
 class CourseDetailsViewController: UIViewController {
@@ -22,8 +23,6 @@ class CourseDetailsViewController: UIViewController {
     var course: Course!
     var interactor: CourseDetailsBusinessLogic?
     var router: (NSObjectProtocol & CourseDetailsRoutingLogic & CourseDetailsDataPassing)?
-    
-    private var isFavorite = false
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -58,7 +57,7 @@ class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            toggleFavorite()
+            interactor?.toggleFavoriteStatus()
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -112,9 +111,7 @@ class CourseDetailsViewController: UIViewController {
         courseImage.addSubview(activityIndicator)
         
         setupConstraints()
-        
-        loadFavoriteStatus()
-        setupUI()
+
         passRequest()
     }
     
@@ -177,31 +174,6 @@ class CourseDetailsViewController: UIViewController {
         )
     }
     
-    private func toggleFavorite() {
-        isFavorite.toggle()
-        setStatusForFavoriteButton()
-        DataManager.shared.setFavoriteStatus(for: course.name, with: isFavorite)
-    }
-    
-    private func loadFavoriteStatus() {
-        isFavorite = DataManager.shared.getFavoriteStatus(for: course.name)
-    }
-    
-    private func setStatusForFavoriteButton() {
-        favoriteButton.tintColor = isFavorite ? .red : .gray
-    }
-    
-    private func setupUI() {
-        DispatchQueue.global().async { [unowned self] in
-            guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
-            DispatchQueue.main.async { [unowned self] in
-                courseImage.image = UIImage(data: imageData)
-            }
-        }
-        
-        setStatusForFavoriteButton()
-    }
-    
     // MARK: Routing
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scene = segue.identifier {
@@ -230,5 +202,9 @@ extension CourseDetailsViewController: CourseDetailsDisplayLogic {
     func displayCourseDetailsImage(viewModel: CourseDetailsImageViewModel) {
         courseImage.image = UIImage(data: viewModel.imageData)
         activityIndicator.stopAnimating()
+    }
+    
+    func setFavoriteStatus(viewModel: CourseDetailsFavoriteStatusViewModel) {
+        favoriteButton.tintColor = viewModel.isFavorite ? .red : .gray
     }
 }
