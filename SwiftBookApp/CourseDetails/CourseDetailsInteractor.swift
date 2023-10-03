@@ -10,6 +10,8 @@
 //  see http://clean-swift.com
 //
 
+import Foundation
+
 protocol CourseDetailsBusinessLogic {
     func provideCourseDetails(request: CourseDetailsRequest)
     func provideCourseDetailsImage()
@@ -36,10 +38,15 @@ class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStor
     }
     
     func provideCourseDetailsImage() {
-        worker = CourseDetailsWorker()
-        let imageData = worker?.getImageData(from: course?.imageUrl)
         
-        let response = CourseDetailsImageResponse(imageData: imageData)
-        presenter?.presentCourseDetailsImage(response: response)
+        
+        DispatchQueue.global().async { [weak self] in
+            self?.worker = CourseDetailsWorker()
+            let imageData = self?.worker?.getImageData(from: self?.course?.imageUrl)
+            DispatchQueue.main.async { [weak self] in
+                let response = CourseDetailsImageResponse(imageData: imageData)
+                self?.presenter?.presentCourseDetailsImage(response: response)
+            }
+        }
     }
 }
