@@ -24,10 +24,15 @@ class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStor
     var worker: CourseDetailsWorker?
     
     func provideCourseDetails(request: CourseDetailsRequest) {
+        course = request.course
         worker = CourseDetailsWorker()
         worker?.doSomeWork()
         
-        let response = CourseDetailsResponse(courseName: request.course.name)
+        let response = CourseDetailsResponse(
+            courseName: course?.name,
+            numberOfLessons: course?.numberOfLessons,
+            numberOfTests: course?.numberOfTests
+        )
         presenter?.presentCourseDetails(response: response)
     }
 }

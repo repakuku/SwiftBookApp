@@ -191,9 +191,6 @@ class CourseDetailsViewController: UIViewController {
     }
     
     private func setupUI() {
-        numberOfLessonsLabel.text = "Number of lessons: \(course.numberOfLessons)"
-        numberOfTestsLabel.text = "Number of tests: \(course.numberOfTests)"
-        
         DispatchQueue.global().async { [unowned self] in
             guard let imageData = NetworkManager.shared.fetchImageData(from: course.imageUrl) else { return }
             DispatchQueue.main.async { [unowned self] in
@@ -224,5 +221,7 @@ class CourseDetailsViewController: UIViewController {
 extension CourseDetailsViewController: CourseDetailsDisplayLogic {
     func displayCourseDetails(viewModel: CourseDetailsViewModel) {
         courseNameLabel.text = viewModel.courseName
+        numberOfLessonsLabel.text = viewModel.numberOfLessons
+        numberOfTestsLabel.text = viewModel.numberOfTests
     }
 }
