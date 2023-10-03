@@ -9,6 +9,7 @@ Programming app interface in code with custom navigation bar.
 
 * MVVM
 * VIPER
+* CleanSwift
 * Boxing
 * Programmatic UI
 * UIKit
