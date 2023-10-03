@@ -12,6 +12,7 @@
 
 protocol CourseDetailsBusinessLogic {
     func provideCourseDetails(request: CourseDetailsRequest)
+    func provideCourseDetailsImage()
 }
 
 protocol CourseDetailsDataStore {
@@ -25,8 +26,6 @@ class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStor
     
     func provideCourseDetails(request: CourseDetailsRequest) {
         course = request.course
-        worker = CourseDetailsWorker()
-        worker?.doSomeWork()
         
         let response = CourseDetailsResponse(
             courseName: course?.name,
@@ -34,5 +33,13 @@ class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStor
             numberOfTests: course?.numberOfTests
         )
         presenter?.presentCourseDetails(response: response)
+    }
+    
+    func provideCourseDetailsImage() {
+        worker = CourseDetailsWorker()
+        let imageData = worker?.getImageData(from: course?.imageUrl)
+        
+        let response = CourseDetailsImageResponse(imageData: imageData)
+        presenter?.presentCourseDetailsImage(response: response)
     }
 }

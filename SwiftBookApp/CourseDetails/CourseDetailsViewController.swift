@@ -14,6 +14,7 @@ import UIKit
 
 protocol CourseDetailsDisplayLogic: AnyObject {
     func displayCourseDetails(viewModel: CourseDetailsViewModel)
+    func displayCourseDetailsImage(viewModel: CourseDetailsImageViewModel)
 }
 
 class CourseDetailsViewController: UIViewController {
@@ -214,6 +215,7 @@ class CourseDetailsViewController: UIViewController {
     private func passRequest() {
         let request = CourseDetailsRequest(course: course)
         interactor?.provideCourseDetails(request: request)
+        interactor?.provideCourseDetailsImage()
     }
 }
 
@@ -223,5 +225,10 @@ extension CourseDetailsViewController: CourseDetailsDisplayLogic {
         courseNameLabel.text = viewModel.courseName
         numberOfLessonsLabel.text = viewModel.numberOfLessons
         numberOfTestsLabel.text = viewModel.numberOfTests
+    }
+    
+    func displayCourseDetailsImage(viewModel: CourseDetailsImageViewModel) {
+        courseImage.image = UIImage(data: viewModel.imageData)
+        activityIndicator.stopAnimating()
     }
 }

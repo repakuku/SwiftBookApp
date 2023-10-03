@@ -9,10 +9,14 @@
 //  you can apply clean architecture to your iOS and Mac projects,
 //  see http://clean-swift.com
 //
+import Foundation
 
 typealias CourseDetailsRequest = CourseDetails.ShowCourseDetails.Request
 typealias CourseDetailsResponse = CourseDetails.ShowCourseDetails.Response
 typealias CourseDetailsViewModel = CourseDetails.ShowCourseDetails.ViewModel
+
+typealias CourseDetailsImageResponse = CourseDetails.ShowCourseDetailsImage.Response
+typealias CourseDetailsImageViewModel = CourseDetails.ShowCourseDetailsImage.ViewModel
 
 enum CourseDetails {
  
@@ -32,6 +36,16 @@ enum CourseDetails {
             let courseName: String
             let numberOfLessons: String
             let numberOfTests: String
+        }
+    }
+    
+    enum ShowCourseDetailsImage {
+        struct Response {
+            let imageData: Data?
+        }
+        
+        struct ViewModel {
+            let imageData: Data
         }
     }
 }

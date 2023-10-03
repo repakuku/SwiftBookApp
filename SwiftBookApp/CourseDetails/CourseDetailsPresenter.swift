@@ -10,8 +10,11 @@
 //  see http://clean-swift.com
 //
 
+import Foundation
+
 protocol CourseDetailsPresentationLogic {
     func presentCourseDetails(response: CourseDetailsResponse)
+    func presentCourseDetailsImage(response: CourseDetailsImageResponse)
 }
 
 class CourseDetailsPresenter: CourseDetailsPresentationLogic {
@@ -21,11 +24,17 @@ class CourseDetailsPresenter: CourseDetailsPresentationLogic {
     func presentCourseDetails(response: CourseDetailsResponse) {
         let numberOfLessons = "Number of lessons: \(response.numberOfLessons ?? 0)"
         let numberOfTests = "Number of tests: \(response.numberOfTests ?? 0)"
+        
         let viewModel = CourseDetailsViewModel(
             courseName: response.courseName ?? "",
             numberOfLessons: numberOfLessons,
             numberOfTests: numberOfTests
         )
         viewController?.displayCourseDetails(viewModel: viewModel)
+    }
+    
+    func presentCourseDetailsImage(response: CourseDetailsImageResponse) {
+        let viewModel = CourseDetailsImageViewModel(imageData: response.imageData ?? Data())
+        viewController?.displayCourseDetailsImage(viewModel: viewModel)
     }
 }
