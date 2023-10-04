@@ -41,7 +41,6 @@ class CourseListRouter: CourseListRoutingLogic, CourseListDataPassing {
     
     // MARK: Passing data
     func passDataToCourseDetails(source: CourseListDataStore, destination: inout CourseDetailsDataStore) {
-        #warning("Fix here")
         guard let indexPath = viewController?.tableView.indexPathForSelectedRow else {
             return
         }
