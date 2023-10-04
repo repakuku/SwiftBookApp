@@ -6,7 +6,7 @@
 //
 
 protocol CourseListBusinessLogic {
-    func provideCourses()
+    func fetchCourses()
 }
 
 protocol CourseListDataStore {
@@ -19,7 +19,7 @@ final class CourseListInteractor: CourseListBusinessLogic, CourseListDataStore {
     var presenter: CourseListPresentationLogic?
     var worker: CourseListWorker?
     
-    func provideCourses() {
+    func fetchCourses() {
         worker = CourseListWorker()
         courses = worker?.getCourses()
         

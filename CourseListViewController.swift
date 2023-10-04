@@ -13,7 +13,7 @@ protocol CourseListDisplayLogic: AnyObject {
 
 final class CourseListViewController: UIViewController {
     
-    var rows: [String] = []
+    var rows: [CourseCellViewModelProtocol] = []
     var interactor: CourseListBusinessLogic?
     
     // MARK: - Private Properties
@@ -39,7 +39,7 @@ final class CourseListViewController: UIViewController {
         setupConstraints()
         setupNavigationBar()
         
-        interactor?.provideCourses()
+        interactor?.fetchCourses()
     }
     
     // MARK: - Setup UI
@@ -68,6 +68,9 @@ final class CourseListViewController: UIViewController {
             ]
         )
     }
+    
+    // MARK: - Routing
+    
 }
 
 // MARK: - UITableViewDataSource
