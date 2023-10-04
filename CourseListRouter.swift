@@ -27,10 +27,10 @@ class CourseListRouter: CourseListRoutingLogic, CourseListDataPassing {
     
     // MARK: Routing
     func routeToCourseDetails() {
-        #warning("TODO: Handle optionals")
+        guard let dataStore else { return }
         let destinationVC = CourseDetailsViewController()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToCourseDetails(source: dataStore!, destination: &destinationDS)
+        guard var destinationDS = destinationVC.router?.dataStore else { return }
+        passDataToCourseDetails(source: dataStore, destination: &destinationDS)
         navigateToCourseDetails(source: viewController!, destination: destinationVC)
     }
     
