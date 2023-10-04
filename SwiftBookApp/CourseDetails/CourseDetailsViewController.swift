@@ -15,7 +15,6 @@ import UIKit
 protocol CourseDetailsDisplayLogic: AnyObject {
     func displayCourseDetails(viewModel: CourseDetailsViewModel)
     func displayCourseDetailsImage(viewModel: CourseDetailsImageViewModel)
-    func setFavoriteStatus(viewModel: CourseDetailsFavoriteStatusViewModel)
 }
 
 class CourseDetailsViewController: UIViewController {
@@ -57,7 +56,7 @@ class CourseDetailsViewController: UIViewController {
     
     private lazy var favoriteButton: UIButton = {
         let action = UIAction { [unowned self] _ in
-            interactor?.toggleFavoriteStatus()
+            
         }
         let button = UIButton(configuration: .plain(), primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -197,14 +196,11 @@ extension CourseDetailsViewController: CourseDetailsDisplayLogic {
         courseNameLabel.text = viewModel.courseName
         numberOfLessonsLabel.text = viewModel.numberOfLessons
         numberOfTestsLabel.text = viewModel.numberOfTests
+        favoriteButton.tintColor = viewModel.isFavorite ? .red : .gray
     }
     
     func displayCourseDetailsImage(viewModel: CourseDetailsImageViewModel) {
         courseImage.image = UIImage(data: viewModel.imageData)
         activityIndicator.stopAnimating()
-    }
-    
-    func setFavoriteStatus(viewModel: CourseDetailsFavoriteStatusViewModel) {
-        favoriteButton.tintColor = viewModel.isFavorite ? .red : .gray
     }
 }

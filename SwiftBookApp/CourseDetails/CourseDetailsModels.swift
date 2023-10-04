@@ -18,9 +18,6 @@ typealias CourseDetailsViewModel = CourseDetails.ShowCourseDetails.ViewModel
 typealias CourseDetailsImageResponse = CourseDetails.ShowCourseDetailsImage.Response
 typealias CourseDetailsImageViewModel = CourseDetails.ShowCourseDetailsImage.ViewModel
 
-typealias CourseDetailsFavoriteStatusResponse = CourseDetails.setFavoriteStatus.Response
-typealias CourseDetailsFavoriteStatusViewModel = CourseDetails.setFavoriteStatus.ViewModel
-
 enum CourseDetails {
  
     // MARK: Use cases
@@ -33,12 +30,14 @@ enum CourseDetails {
             let courseName: String?
             let numberOfLessons: Int?
             let numberOfTests: Int?
+            let isFavorite: Bool
         }
         
         struct ViewModel {
             let courseName: String
             let numberOfLessons: String
             let numberOfTests: String
+            let isFavorite: Bool
         }
     }
     
@@ -49,16 +48,6 @@ enum CourseDetails {
         
         struct ViewModel {
             let imageData: Data
-        }
-    }
-    
-    enum setFavoriteStatus {
-        struct Response {
-            let isFavorite: Bool
-        }
-        
-        struct ViewModel {
-            let isFavorite: Bool
         }
     }
 }

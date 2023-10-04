@@ -16,4 +16,8 @@ class CourseDetailsWorker {
     func getImageData(from url: URL?) -> Data? {
         NetworkManager.shared.fetchImageData(from: url)
     }
+    
+    func getFavoriteStatus(for courseName: String) -> Bool {
+        DataManager.shared.getFavoriteStatus(for: courseName)
+    }
 }
