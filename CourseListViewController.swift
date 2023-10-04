@@ -13,11 +13,12 @@ protocol CourseListDisplayLogic: AnyObject {
 
 final class CourseListViewController: UIViewController {
     
-    var rows: [CourseCellViewModelProtocol] = []
     var interactor: CourseListBusinessLogic?
+    var router: (NSObjectProtocol & CourseListRoutingLogic & CourseListDataPassing)?
     
     // MARK: - Private Properties
     private let cellID = "course"
+    private var rows: [CourseCellViewModelProtocol] = []
     
     // MARK: - Views
     private lazy var tableView: UITableView = {

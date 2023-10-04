@@ -12,12 +12,12 @@ protocol CourseListBusinessLogic {
 }
 
 protocol CourseListDataStore {
-    var courses: [Course]? { get }
+    var courses: [Course] { get }
 }
 
 final class CourseListInteractor: CourseListBusinessLogic, CourseListDataStore {
 
-    var courses: [Course]?
+    var courses: [Course] = []
     var presenter: CourseListPresentationLogic?
     
     func fetchCourses() {

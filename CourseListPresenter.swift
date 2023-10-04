@@ -14,13 +14,10 @@ final class CourseListPresenter: CourseListPresentationLogic {
     weak var viewController: CourseListDisplayLogic?
     
     func presentCourses(response: CourseList.ShowCourses.Response) {
-        
-        var rows: [CourseCellViewModelProtocol] = []
-        
-        response.courses.forEach { rows.append(CourseCellViewModel(course: $0)) }
-        
+        let rows: [CourseCellViewModelProtocol] = response.courses.map {
+            CourseCellViewModel(course: $0)
+        }
         let viewModel = CourseList.ShowCourses.ViewModel(rows: rows)
-        
         viewController?.displayCourses(viewModel: viewModel)
     }
 }
