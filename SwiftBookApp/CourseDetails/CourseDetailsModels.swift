@@ -18,6 +18,9 @@ typealias CourseDetailsViewModel = CourseDetails.ShowCourseDetails.ViewModel
 typealias CourseDetailsImageResponse = CourseDetails.ShowCourseDetailsImage.Response
 typealias CourseDetailsImageViewModel = CourseDetails.ShowCourseDetailsImage.ViewModel
 
+typealias CourseDetailsFavoriteStatusResponse = CourseDetails.SetFavoriteStatus.Response
+typealias CourseDetailsFavoriteStatusViewModel = CourseDetails.SetFavoriteStatus.ViewModel
+
 enum CourseDetails {
  
     // MARK: Use cases
@@ -48,6 +51,16 @@ enum CourseDetails {
         
         struct ViewModel {
             let imageData: Data
+        }
+    }
+    
+    enum SetFavoriteStatus {
+        struct Response {
+            let isFavorite: Bool
+        }
+        
+        struct ViewModel {
+            let isFavorite: Bool
         }
     }
 }

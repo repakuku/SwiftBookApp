@@ -15,6 +15,7 @@ import Foundation
 protocol CourseDetailsBusinessLogic {
     func provideCourseDetails(request: CourseDetailsRequest)
     func provideCourseDetailsImage()
+    func toggleFavoriteStatus()
 }
 
 protocol CourseDetailsDataStore {
@@ -53,5 +54,14 @@ class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStor
                 self?.presenter?.presentCourseDetailsImage(response: response)
             }
         }
+    }
+    
+    func toggleFavoriteStatus() {
+        isFavorite.toggle()
+        worker = CourseDetailsWorker()
+        worker?.setFavoriteStatus(for: course?.name ?? "", with: isFavorite)
+        
+        let response = CourseDetailsFavoriteStatusResponse(isFavorite: isFavorite)
+        presenter?.provideFavoriteStatus(response: response)
     }
 }
