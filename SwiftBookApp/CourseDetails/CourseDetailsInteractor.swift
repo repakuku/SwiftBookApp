@@ -47,7 +47,6 @@ class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStor
     
     func provideCourseDetailsImage() {
         DispatchQueue.global().async { [weak self] in
-            self?.worker = CourseDetailsWorker()
             let imageData = self?.worker?.getImageData(from: self?.course?.imageUrl)
             DispatchQueue.main.async { [weak self] in
                 let response = CourseDetailsImageResponse(imageData: imageData)
@@ -58,8 +57,7 @@ class CourseDetailsInteractor: CourseDetailsBusinessLogic, CourseDetailsDataStor
     
     func toggleFavoriteStatus() {
         isFavorite.toggle()
-        worker = CourseDetailsWorker()
-        worker?.setFavoriteStatus(for: course?.name ?? "", with: isFavorite)
+        worker?.setNewFavoriteStatus(for: course?.name ?? "", with: isFavorite)
         
         let response = CourseDetailsFavoriteStatusResponse(isFavorite: isFavorite)
         presenter?.provideFavoriteStatus(response: response)

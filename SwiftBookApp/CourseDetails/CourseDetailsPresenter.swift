@@ -42,6 +42,6 @@ class CourseDetailsPresenter: CourseDetailsPresentationLogic {
     
     func provideFavoriteStatus(response: CourseDetailsFavoriteStatusResponse) {
         let viewModel = CourseDetailsFavoriteStatusViewModel(isFavorite: response.isFavorite)
-        viewController?.setFavoriteStatus(viewModel: viewModel)
+        viewController?.displayFavoriteButtonStatus(viewModel: viewModel)
     }
 }

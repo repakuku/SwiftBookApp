@@ -15,11 +15,12 @@ import UIKit
 protocol CourseDetailsDisplayLogic: AnyObject {
     func displayCourseDetails(viewModel: CourseDetailsViewModel)
     func displayCourseDetailsImage(viewModel: CourseDetailsImageViewModel)
-    func setFavoriteStatus(viewModel: CourseDetailsFavoriteStatusViewModel)
+    func displayFavoriteButtonStatus(viewModel: CourseDetailsFavoriteStatusViewModel)
 }
 
 class CourseDetailsViewController: UIViewController {
     
+    #warning("TODO: delete course")
     var course: Course!
     var interactor: CourseDetailsBusinessLogic?
     var router: (NSObjectProtocol & CourseDetailsRoutingLogic & CourseDetailsDataPassing)?
@@ -205,7 +206,7 @@ extension CourseDetailsViewController: CourseDetailsDisplayLogic {
         activityIndicator.stopAnimating()
     }
     
-    func setFavoriteStatus(viewModel: CourseDetailsFavoriteStatusViewModel) {
+    func displayFavoriteButtonStatus(viewModel: CourseDetailsFavoriteStatusViewModel) {
         favoriteButton.tintColor = viewModel.isFavorite ? .red : .gray
     }
 }
