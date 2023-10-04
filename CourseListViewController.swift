@@ -14,14 +14,14 @@ protocol CourseListDisplayLogic: AnyObject {
 final class CourseListViewController: UIViewController {
     
     var interactor: CourseListBusinessLogic?
-    var router: (NSObjectProtocol & CourseListRoutingLogic & CourseListDataPassing)?
+    var router: (CourseListRoutingLogic & CourseListDataPassing)?
     
     // MARK: - Private Properties
     private let cellID = "course"
     private var rows: [CourseCellViewModelProtocol] = []
     
     // MARK: - Views
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(CourseCell.self, forCellReuseIdentifier: cellID)
@@ -93,6 +93,7 @@ extension CourseListViewController: UITableViewDataSource {
 extension CourseListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        router?.routeToCourseDetails()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

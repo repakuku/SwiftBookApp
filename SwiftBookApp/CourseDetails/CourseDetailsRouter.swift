@@ -20,7 +20,7 @@ protocol CourseDetailsDataPassing {
     var dataStore: CourseDetailsDataStore? { get }
 }
 
-class CourseDetailsRouter: NSObject, CourseDetailsRoutingLogic, CourseDetailsDataPassing {
+class CourseDetailsRouter: CourseDetailsRoutingLogic, CourseDetailsDataPassing {
     
     weak var viewController: CourseDetailsViewController?
     var dataStore: CourseDetailsDataStore?

@@ -20,10 +20,8 @@ protocol CourseDetailsDisplayLogic: AnyObject {
 
 final class CourseDetailsViewController: UIViewController {
     
-    #warning("TODO: delete course")
-    var course: Course!
     var interactor: CourseDetailsBusinessLogic?
-    var router: (NSObjectProtocol & CourseDetailsRoutingLogic & CourseDetailsDataPassing)?
+    var router: (CourseDetailsRoutingLogic & CourseDetailsDataPassing)?
     
     // MARK: - UIViews
     private lazy var courseNameLabel: UILabel = {
@@ -174,20 +172,9 @@ final class CourseDetailsViewController: UIViewController {
             ]
         )
     }
-    
-    // MARK: Routing
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
         
     private func passRequest() {
-        let request = CourseDetailsRequest(course: course)
-        interactor?.provideCourseDetails(request: request)
+        interactor?.provideCourseDetails()
         interactor?.provideCourseDetailsImage()
     }
 }
