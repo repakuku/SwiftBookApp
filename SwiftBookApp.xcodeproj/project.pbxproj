@@ -27,8 +27,9 @@
 		0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0768587A2A9E8C4200927BE5 /* SceneDelegate.swift */; };
 		076858822A9E8C4200927BE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 076858812A9E8C4200927BE5 /* Assets.xcassets */; };
 		076858852A9E8C4200927BE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 076858832A9E8C4200927BE5 /* LaunchScreen.storyboard */; };
+		079C38012ACCE98B006FC40A /* CourseListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C38002ACCE98B006FC40A /* CourseListModels.swift */; };
+		079C38032ACCECBA006FC40A /* CourseListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C38022ACCECBA006FC40A /* CourseListWorker.swift */; };
 		07C989272A9FAD9F0033396F /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C989262A9FAD9F0033396F /* CourseListViewController.swift */; };
-		07F9B3DF2AA7A53E00928030 /* CourseListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F9B3DE2AA7A53E00928030 /* CourseListViewModel.swift */; };
 		07F9B3E12AA7A9C600928030 /* CourseCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F9B3E02AA7A9C600928030 /* CourseCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +56,9 @@
 		076858812A9E8C4200927BE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		076858842A9E8C4200927BE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		076858862A9E8C4200927BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		079C38002ACCE98B006FC40A /* CourseListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListModels.swift; sourceTree = "<group>"; };
+		079C38022ACCECBA006FC40A /* CourseListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListWorker.swift; sourceTree = "<group>"; };
 		07C989262A9FAD9F0033396F /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
-		07F9B3DE2AA7A53E00928030 /* CourseListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewModel.swift; sourceTree = "<group>"; };
 		07F9B3E02AA7A9C600928030 /* CourseCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,11 +168,12 @@
 			isa = PBXGroup;
 			children = (
 				07C989262A9FAD9F0033396F /* CourseListViewController.swift */,
-				07273C8D2AC4FB8000BAAB53 /* CourseListPresenter.swift */,
 				07273C8F2AC4FC1400BAAB53 /* CourseListInteractor.swift */,
-				07273C932AC503AB00BAAB53 /* CourseListRouter.swift */,
+				07273C8D2AC4FB8000BAAB53 /* CourseListPresenter.swift */,
 				07273C912AC4FCF200BAAB53 /* CourseListConfigurator.swift */,
-				07F9B3DE2AA7A53E00928030 /* CourseListViewModel.swift */,
+				079C38022ACCECBA006FC40A /* CourseListWorker.swift */,
+				07273C932AC503AB00BAAB53 /* CourseListRouter.swift */,
+				079C38002ACCE98B006FC40A /* CourseListModels.swift */,
 				0730DAE92AA27608004ACDDE /* CourseCell */,
 			);
 			name = CourseList;
@@ -264,17 +267,18 @@
 				0756E94B2AC3A371006B1196 /* CourseDetailsConfigurator.swift in Sources */,
 				074829552AA11D5E002DACCB /* NetworkManager.swift in Sources */,
 				0729F5012ACB514100E2B2C8 /* CourseDetailsViewController.swift in Sources */,
-				07F9B3DF2AA7A53E00928030 /* CourseListViewModel.swift in Sources */,
 				0729F4F32ACB50E500E2B2C8 /* CourseDetailsWorker.swift in Sources */,
 				0729F4F52ACB50E500E2B2C8 /* CourseDetailsModels.swift in Sources */,
 				07273C942AC503AB00BAAB53 /* CourseListRouter.swift in Sources */,
 				07273C8E2AC4FB8000BAAB53 /* CourseListPresenter.swift in Sources */,
 				074829592AA122EC002DACCB /* DataManager.swift in Sources */,
 				07F9B3E12AA7A9C600928030 /* CourseCellViewModel.swift in Sources */,
+				079C38012ACCE98B006FC40A /* CourseListModels.swift in Sources */,
 				0729F4F42ACB50E500E2B2C8 /* CourseDetailsRouter.swift in Sources */,
 				074829522AA1131D002DACCB /* Course.swift in Sources */,
 				0730DAEB2AA27619004ACDDE /* CourseCell.swift in Sources */,
 				076858792A9E8C4200927BE5 /* AppDelegate.swift in Sources */,
+				079C38032ACCECBA006FC40A /* CourseListWorker.swift in Sources */,
 				07273C922AC4FCF200BAAB53 /* CourseListConfigurator.swift in Sources */,
 				0768587B2A9E8C4200927BE5 /* SceneDelegate.swift in Sources */,
 				0729F4FD2ACB514100E2B2C8 /* CourseDetailsPresenter.swift in Sources */,

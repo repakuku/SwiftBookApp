@@ -18,7 +18,7 @@ protocol CourseDetailsDisplayLogic: AnyObject {
     func displayFavoriteButtonStatus(viewModel: CourseDetailsFavoriteStatusViewModel)
 }
 
-class CourseDetailsViewController: UIViewController {
+final class CourseDetailsViewController: UIViewController {
     
     #warning("TODO: delete course")
     var course: Course!
