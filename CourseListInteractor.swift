@@ -5,6 +5,8 @@
 //  Created by Alexey Turulin on 9/27/23.
 //
 
+import Foundation
+
 protocol CourseListBusinessLogic {
     func fetchCourses()
 }
@@ -17,13 +19,12 @@ final class CourseListInteractor: CourseListBusinessLogic, CourseListDataStore {
 
     var courses: [Course]?
     var presenter: CourseListPresentationLogic?
-    var worker: CourseListWorker?
     
     func fetchCourses() {
-        worker = CourseListWorker()
-        courses = worker?.getCourses()
-        
-        let response = CourseList.ShowCourses.Response(courses: courses ?? [])
-        presenter?.presentCourses(response: response)
+        NetworkManager.shared.fetchData { [weak self] courses in
+            self?.courses = courses
+            let response = CourseList.ShowCourses.Response(courses: courses)
+            self?.presenter?.presentCourses(response: response)
+        }
     }
 }

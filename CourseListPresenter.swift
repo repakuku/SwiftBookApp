@@ -15,5 +15,12 @@ final class CourseListPresenter: CourseListPresentationLogic {
     
     func presentCourses(response: CourseList.ShowCourses.Response) {
         
+        var rows: [CourseCellViewModelProtocol] = []
+        
+        response.courses.forEach { rows.append(CourseCellViewModel(course: $0)) }
+        
+        let viewModel = CourseList.ShowCourses.ViewModel(rows: rows)
+        
+        viewController?.displayCourses(viewModel: viewModel)
     }
 }

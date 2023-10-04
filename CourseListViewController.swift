@@ -83,7 +83,7 @@ extension CourseListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         guard let cell = cell as? CourseCell else { return UITableViewCell() }
-        
+        cell.viewModel = rows[indexPath.row]
         return cell
     }
 }
@@ -95,7 +95,7 @@ extension CourseListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        100
+        rows[indexPath.row].height
     }
 }
 
@@ -103,5 +103,6 @@ extension CourseListViewController: UITableViewDelegate {
 extension CourseListViewController: CourseListDisplayLogic {
     func displayCourses(viewModel: CourseList.ShowCourses.ViewModel) {
         rows = viewModel.rows
+        tableView.reloadData()
     }
 }
